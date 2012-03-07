@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent">
+    
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    <ImageView android:layout_margin="30px" android:id="@+id/img_cover_view" android:layout_width="wrap_content" android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:paddingTop="30px"></ImageView>
+	
+        <LinearLayout
+		    android:orientation="vertical"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    >
+		    <TextView
+			    android:id="@+id/txt_title"
+			    android:layout_marginTop="30px"
+			    android:textStyle="bold"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:text="TextView" android:textSize="20sp"/>
+		    
+		    	<TextView
+				    android:id="@+id/txt_genre"
+				    android:textStyle="normal"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_gravity="center_horizontal"
+				    android:text="Genre" android:textSize="12sp"/>
+				
+				<TextView
+				    android:id="@+id/txt_summary"
+				    android:layout_marginTop="20px"
+				    android:textStyle="italic"
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content"
+				    android:layout_gravity="center_horizontal"
+				    android:text="Genre" android:textSize="12sp"/>
+	
+			<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center_horizontal"
+		     android:layout_marginTop="60px"
+		    >
+		    <Button android:text="@string/back" android:background="@drawable/rounded_button" android:layout_width="wrap_content" android:id="@+id/bt_back" android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:padding="15px" android:textSize="20dp" android:layout_marginRight="30px" android:minWidth="150px" android:layout_marginBottom="40px"></Button>
+			<Button android:text="@string/play" android:background="@drawable/rounded_button" android:id="@+id/bt_launch"  android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:padding="15px" android:textSize="20dp" android:layout_width="wrap_content" android:minWidth="150px"></Button>
+		
+		</LinearLayout>
+	</LinearLayout>	
+</LinearLayout>
+</ScrollView>
+
+
