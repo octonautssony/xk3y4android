@@ -39,6 +39,8 @@ public final class ConfigUtils implements Serializable {
 	private List<Iso> listeGames;
 	/** The game selected by the user */
 	private Iso selectedGame;
+	/** The screen with */
+	private int screenWidth;
 	/** The cover with */
 	private int coverWidth;
 	/** The cover height */
@@ -48,7 +50,7 @@ public final class ConfigUtils implements Serializable {
 	/** Light theme without reflection */
 	private boolean lightTheme = false;
 	/** Cache data to start more quicly */
-	private boolean cacheData = false;
+	private boolean cacheData = true;
 	
 	private static ConfigUtils instance;
 
@@ -159,11 +161,21 @@ public final class ConfigUtils implements Serializable {
 		return cacheData;
 	}
 
+	public int getScreenWidth() {
+		return screenWidth;
+	}
+
+	public void setScreenWidth(int screenWidth) {
+		this.screenWidth = screenWidth;
+	}
+
+	
+	/*
 	public void setCacheData(boolean cacheData) {
 		this.cacheData = cacheData;
 		savePreferences(CACHE_DATA, String.valueOf(cacheData));
 	}
-
+*/
 	
 	
 }

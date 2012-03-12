@@ -18,13 +18,14 @@
  * 
  * @author Neil Davies
  */
-package xk3y.dongle.android.ihm;
+package xk3y.dongle.android.ihm.theme;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import xk3y.dongle.android.R;
 import xk3y.dongle.android.dto.Iso;
+import xk3y.dongle.android.ihm.GameDetailsActivity;
 import xk3y.dongle.android.utils.ConfigUtils;
 import xk3y.dongle.android.utils.CoverFlow;
 import android.app.Activity;
@@ -41,7 +42,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 public class CoverFlowGamesActivity extends Activity {
-	
+	private CoverFlow coverFlow;
 	private List<Iso> listGames = new ArrayList<Iso>();
 	
 	/** Called when the activity is first created. */
@@ -55,14 +56,15 @@ public class CoverFlowGamesActivity extends Activity {
 		
 		listGames = ConfigUtils.getConfig().getListeGames();
 		
-		CoverFlow coverFlow;
+		//CoverFlow coverFlow;
 		coverFlow = new CoverFlow(this);
 
 		coverFlow.setAdapter(new ImageAdapter(this));
 
 		ImageAdapter coverImageAdapter = new ImageAdapter(this);
-		
+
 		coverFlow.setAdapter(coverImageAdapter);
+		coverFlow.setAlwaysDrawnWithCacheEnabled(true);
 
 		coverFlow.setSpacing(0);
 		coverFlow.setSelection(4, true);
@@ -82,6 +84,7 @@ public class CoverFlowGamesActivity extends Activity {
 			}
 		});
 		
+
 		setContentView(coverFlow);
 		
 		// Icon of the app
@@ -110,7 +113,6 @@ public class CoverFlowGamesActivity extends Activity {
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
-
 			final Iso iso = listGames.get(position);
 			// Use this code if you want to load from resources
 			ImageView i = new ImageView(mContext);

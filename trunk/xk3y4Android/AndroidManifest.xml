@@ -18,13 +18,14 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name=".list.games.ListGamesActivity">
+		<activity android:name=".ihm.theme.ListGamesActivity"
+		    android:screenOrientation="portrait">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
 				<action android:name="android.intent.action.EDIT" />
 			</intent-filter>
 		</activity>
-		<activity android:name=".ihm.CoverFlowGamesActivity">
+		<activity android:name=".ihm.theme.CoverFlowGamesActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
 				<action android:name="android.intent.action.EDIT" />

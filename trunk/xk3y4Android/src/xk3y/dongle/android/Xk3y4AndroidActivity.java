@@ -10,6 +10,8 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Display;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
@@ -113,10 +115,11 @@ public class Xk3y4AndroidActivity extends Activity {
 		String lightTheme = preferences.getString(ConfigUtils.LIGHT_THEME, "0");
 		ConfigUtils.getConfig().setLightTheme(Boolean.valueOf(lightTheme));
 		
+		/*
 		// Load cache system
-		String cacheData = preferences.getString(ConfigUtils.CACHE_DATA, "0");
+		String cacheData = preferences.getString(ConfigUtils.CACHE_DATA, "1");
 		ConfigUtils.getConfig().setCacheData(Boolean.valueOf(cacheData));
-		
+		*/
 		
 		// Init cover size
 		Display display = getWindowManager().getDefaultDisplay();
@@ -127,7 +130,7 @@ public class Xk3y4AndroidActivity extends Activity {
 		if (width > height) {
 			min = height;
 		}
-		
+		ConfigUtils.getConfig().setScreenWidth(min);
 		
 		int newHeigth = (int) ((min/1.5) * 0.8);
 		ConfigUtils.getConfig().setCoverHeight(newHeigth);
@@ -145,6 +148,6 @@ public class Xk3y4AndroidActivity extends Activity {
 		return btSettings;
 	}
     
-    
+
     
 }

@@ -17,7 +17,7 @@
     <string name="open_dvd_drive">Ouvrez votre lecteur !</string>
     <string name="game_in_dvd_drive">Jeu en cours d\'execution...</string>
     <string name="summary">Résumé</string>
-    <string name="crash_toast_text">Oooops, application crash !!!! \nEnvoyez cet email pour corriger ce problème !</string>
+    <string name="crash_toast_text">Oooops, application crash !!!! \nEnvoyez un email au développeur pour corriger ce problème !</string>
     <string name="crash_title_text">Xk3y4Android</string>
     <string name="ckb_light">Theme Light \n(Sans effet miroir... \nA utiliser en cas de plantage)</string>
     <string name="ckb_cache">Mettre en cache les données \n(Démarrage plus rapide)</string>
@@ -27,4 +27,5 @@
     <string name="time_played">Total temps</string>
     <string name="favorites">Favoris</string>
     <string name="xk3y_info">Xk3y Info</string>
+    <string name="out_of_memory_error">Désolé mais votre appareil ne semble pas disposer de suffisament de mémoire pour faire fonctionner ce thème.\n\nVous pouvez essayer de relancer l\'application pour mettre en cache plus de données ou essayer un autre thème.\n\nSi le problème persiste, supprimer quelques jeux de votre disque dur.</string>
 </resources>

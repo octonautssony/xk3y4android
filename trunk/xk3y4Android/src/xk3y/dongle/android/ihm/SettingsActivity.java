@@ -16,7 +16,7 @@ import android.widget.EditText;
  */
 public class SettingsActivity extends Activity {
 	
-	private CheckBox ckbCacheData;
+	//private CheckBox ckbCacheData;
 	private CheckBox ckbLightTheme;
 	private CheckBox ckbClearCache;
 	private EditText textIp;
@@ -60,8 +60,8 @@ public class SettingsActivity extends Activity {
 	    	textIp = (EditText)findViewById(R.id.txt_ip);
 	    	textIp.setText(ConfigUtils.getConfig().getIpAdress());
 	    	
-	    	ckbCacheData = (CheckBox)findViewById(R.id.ckb_cache_info);
-	    	ckbCacheData.setChecked(ConfigUtils.getConfig().isCacheData());
+	    	//ckbCacheData = (CheckBox)findViewById(R.id.ckb_cache_info);
+	    	//ckbCacheData.setChecked(ConfigUtils.getConfig().isCacheData());
 	    	
 	    	ckbLightTheme = (CheckBox)findViewById(R.id.ckb_light_theme);
 	    	ckbLightTheme.setChecked(ConfigUtils.getConfig().isLightTheme());
@@ -84,11 +84,11 @@ public class SettingsActivity extends Activity {
         btSave.setOnClickListener(controller);
         btBack.setOnClickListener(controller);
     }
-
+/*
 	public CheckBox getCkbCacheData() {
 		return ckbCacheData;
 	}
-
+*/
 	public CheckBox getCkbLightTheme() {
 		return ckbLightTheme;
 	}

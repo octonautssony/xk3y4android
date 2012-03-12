@@ -8,8 +8,9 @@ import org.acra.ErrorReporter;
 
 import xk3y.dongle.android.dto.Iso;
 import xk3y.dongle.android.dto.Xkey;
-import xk3y.dongle.android.ihm.CoverFlowGamesActivity;
 import xk3y.dongle.android.ihm.SettingsActivity;
+import xk3y.dongle.android.ihm.theme.CoverFlowGamesActivity;
+import xk3y.dongle.android.ihm.theme.ListGamesActivity;
 import xk3y.dongle.android.utils.ConfigUtils;
 import xk3y.dongle.android.utils.DialogBoxUtils;
 import xk3y.dongle.android.utils.HttpServices;
@@ -161,16 +162,24 @@ public class Xk3y4AndroidController implements OnClickListener {
 					// Open list games window
 					currentGameNameToDebug = "All Games load...";
 					debugMsg += "\nLaunch CoverFlow...";
-					Intent myIntent = new Intent(view, CoverFlowGamesActivity.class);
-					view.startActivity(myIntent);
+					
+					throw new OutOfMemoryError();
+					//Intent myIntent = new Intent(view, CoverFlowGamesActivity.class);
+					//Intent myIntent = new Intent(view, ListGamesActivity.class);
+					//view.startActivity(myIntent);
 				}
 				
 			}
 			
+		} catch (OutOfMemoryError E) {
+			//progressDialog.setMessage("boooom");
+			SHOW_ERROR = true;
+			error_to_display = R.string.out_of_memory_error;
 		} catch (Exception e) {
 			ErrorReporter.getInstance().putCustomData("\n\nLOADIG_GAME", "\n" + currentGameNameToDebug);
 			ErrorReporter.getInstance().putCustomData("\n\nDEBUG_MESSAGE", "\n" + debugMsg);
 			ErrorReporter.getInstance().handleException(e);
+
 			//progressDialog.setMessage("boooom");
 			//SHOW_DEBUG_MSG = true;
 			//debugMsg += "\n" + e.getMessage();

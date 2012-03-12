@@ -26,6 +26,7 @@ public class Iso implements Serializable {
 	@Element(name = "ID", required=false)
 	private String id;
 	
+	private Bitmap banner;
 	private Bitmap cover;
 	private Bitmap originalCover;
 	
@@ -33,7 +34,7 @@ public class Iso implements Serializable {
 	private String gender;
 
 	public byte[] imageByteArray;
-	
+	public byte[] bannerByteArray;
 	/*
 	private ByteBuffer dstOriginal;
 		
@@ -94,24 +95,59 @@ public class Iso implements Serializable {
 	    out.writeUTF(summary);
 	    out.writeUTF(gender);
 	 
+	    String strBanner = " ";
+		try {
+			if (banner != null) {
+				strBanner = LoadingUtils.convertImageToBase64(banner);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    out.writeUTF(strBanner);
+
 	    ByteArrayOutputStream stream = new ByteArrayOutputStream();
 	    originalCover.compress(Bitmap.CompressFormat.PNG, 100, stream);
 	    this.imageByteArray = stream.toByteArray();
 	 
 	    out.writeObject(this.imageByteArray);
+
+	    /*
+	    ByteArrayOutputStream bannerstream = new ByteArrayOutputStream();
+	    banner.compress(Bitmap.CompressFormat.PNG, 100, bannerstream);
+	    this.bannerByteArray = bannerstream.toByteArray();
+	 
+	    out.writeObject(this.bannerByteArray);
+*/
 	}
 	 
 	/** Included for serialization - read this object from the supplied input stream. */
 	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+	    
 	    title = in.readUTF();
 	    id = in.readUTF();
         summary = in.readUTF();
         gender = in.readUTF();
 	 
+        
+        String strBanner = in.readUTF();
+		try {
+			banner = LoadingUtils.encodeImageFromBase64(strBanner);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	    this.imageByteArray = (byte[]) in.readObject();
 	    originalCover = BitmapFactory.decodeByteArray(this.imageByteArray,
 	                                               0, this.imageByteArray.length);
 
+	
+/*
+	    this.bannerByteArray = (byte[]) in.readObject();
+	    banner = BitmapFactory.decodeByteArray(this.bannerByteArray,
+	                                               0, this.bannerByteArray.length);
+	    */
 	    try {
 			LoadingUtils.addCoverToGame(this, originalCover);
 		} catch (Exception e) {
@@ -156,6 +192,14 @@ public class Iso implements Serializable {
 	}
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+
+	public Bitmap getBanner() {
+		return banner;
+	}
+
+	public void setBanner(Bitmap banner) {
+		this.banner = banner;
 	}
 	
 	

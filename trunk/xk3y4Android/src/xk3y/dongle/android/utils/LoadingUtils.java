@@ -28,6 +28,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Environment;
+import android.widget.ImageButton;
 
 public class LoadingUtils {
 
@@ -86,10 +87,10 @@ public class LoadingUtils {
 				game.setTitle(gameFromSd.getTitle());
 				game.setGender(gameFromSd.getGender());
 				game.setSummary(gameFromSd.getSummary());
+				game.setBanner(gameFromSd.getBanner());
 				game.setCover(gameFromSd.getCover());
 				game.setOriginalCover(gameFromSd.getOriginalCover());
 			}
-			
 		} catch (Exception e) {
 			throw e;
 		}
@@ -162,13 +163,22 @@ public class LoadingUtils {
 			if (gameInfo.getSummary() != null && !gameInfo.getSummary().equals("")) {
 				game.setSummary(gameInfo.getSummary());
 			}
-			
 			// If conver == null then no xml, no cover
 			if (cover == null) {
 				gameInfo = null;
 			} else {
-				addCoverToGame(game, cover);
+				addCoverToGame(game, resizeCover(cover));
 			}
+			
+			Bitmap banner = encodeImageFromBase64(gameInfo.getBanner());
+			// If banner == null then no xml, no banner
+			if (banner == null) {
+				game.setBanner(null);
+			} else {
+				game.setBanner(banner);
+				//game.setBanner(banner);
+			}
+			
 			
 		} catch (Exception e) {
 			gameInfo = null;
@@ -190,7 +200,7 @@ public class LoadingUtils {
 			Bitmap cover = HttpServices.getInstance().loadImage(coverUrl);
 			
 			// Set the Bitmap to the game
-			addCoverToGame(game, cover);
+			addCoverToGame(game, resizeCover(cover));
 			
 		} catch (Exception e) {
 			throw e;
@@ -203,29 +213,27 @@ public class LoadingUtils {
 	 */
 	public static void addCoverToGame(Iso game, Bitmap cover) throws Exception {
 		try {
-			if (cover == null) {
-				cover = ConfigUtils.getConfig().getDefaultCover();
-			}
-			
-			// Resize the cover for the device
-			Bitmap resizeCover = resizeCover(cover);
-			
 			// The bitmpa With title at top
+			
 			Bitmap coverWithTitle = addTextAtTopOfBitmap(
-					resizeCover, game.getTitle());
+					cover, game.getTitle());
+			
+			//resizeCover.recycle();
 			
 			// Set the original cover
 			game.setOriginalCover(cover);
 			
 			if (!ConfigUtils.getConfig().isLightTheme()) {
 				// Set the cover with text and reflexion
-				game.setCover(
-						addReflextionToBitmap(coverWithTitle));
+				Bitmap coverWithReflextion = addReflextionToBitmap(coverWithTitle);
+				game.setCover(coverWithReflextion);
+				coverWithTitle.recycle();
 			} else {
 				// Set the cover with text without reflexion
 				game.setCover(coverWithTitle);
 			}
 
+			System.gc();
 		} catch (Exception e) {
 			throw e;
 		}
@@ -240,6 +248,9 @@ public class LoadingUtils {
 	 */
 	public static Bitmap resizeCover(Bitmap cover) throws Exception {
 		Bitmap resizeCover = cover;
+		if (resizeCover == null) {
+			resizeCover = ConfigUtils.getConfig().getDefaultCover();
+		}
 		try {
 			// Resize the image
 			int height = ConfigUtils.getConfig().getCoverHeight();
@@ -273,6 +284,53 @@ public class LoadingUtils {
 			ConfigUtils.getConfig().setCoverWidth(newWidth);
 			
 			resizeCover = Bitmap.createScaledBitmap(cover, newWidth, height, true);
+
+		} catch (Exception e) {
+			throw e;
+		}
+		return resizeCover;
+	}
+	
+	/**
+	 * Resize the cover
+	 * @param cover the cover to resize
+	 * @return the resized cover
+	 * @throws Exception 
+	 */
+	public static Bitmap resizeCoverForList(Bitmap cover) throws Exception {
+		Bitmap resizeCover = cover;
+		try {
+			// Resize the image
+			int height = (int) (ConfigUtils.getConfig().getCoverHeight() * 0.4);
+			float tmp = ((float)((float)height / (float)cover.getHeight())) * cover.getWidth();
+			//int newWidth = (int) (tmp * 0.9);
+			int newWidth = (int) tmp;
+			ConfigUtils.getConfig().setCoverWidth(newWidth);
+			
+			resizeCover = Bitmap.createScaledBitmap(cover, newWidth, height, true);
+
+		} catch (Exception e) {
+			throw e;
+		}
+		return resizeCover;
+	}
+	
+	/**
+	 * Resize the cover
+	 * @param cover the cover to resize
+	 * @return the resized cover
+	 * @throws Exception 
+	 */
+	public static Bitmap resizeBanner(Bitmap cover) throws Exception {
+		Bitmap resizeCover = cover;
+		try {
+			// Resize the image
+			int width  = ConfigUtils.getConfig().getScreenWidth();
+			float tmp = ((float)((float)width / (float)cover.getWidth())) * cover.getHeight();
+			//int newWidth = (int) (tmp * 0.9);
+			int newHeight = (int) tmp;
+
+			resizeCover = Bitmap.createScaledBitmap(cover, width, newHeight, true);
 
 		} catch (Exception e) {
 			throw e;
@@ -377,6 +435,7 @@ public class LoadingUtils {
 			canvas.drawRect(0, height, width, bitmapWithReflection.getHeight()
 					+ reflectionGap, paint);
 
+			reflectionImage.recycle();
 		} catch (Exception e) {
 			throw e;
 		}
@@ -497,7 +556,20 @@ public class LoadingUtils {
 	 */
 	public static void removeDataCache() throws Exception {
 		try {
-			File dir = new File(GAME_FOLDER_PATH);
+			removeDataDir(GAME_FOLDER_PATH);
+			removeDataDir(COVER_FOLDER_PATH);
+		} catch (Exception e) {
+			throw e;
+		}
+	} 
+	
+	/**
+	 * Remove data cache folder
+	 * @throws Exception exception
+	 */
+	public static void removeDataDir(String path) throws Exception {
+		try {
+			File dir = new File(path);
 			if (dir.exists() && dir.isDirectory()) {
 				String[] children = dir.list();
 		        for (int i = 0; i < children.length; i++) {
@@ -511,5 +583,12 @@ public class LoadingUtils {
 			throw e;
 		}
 	} 
+	
+	// Clear bitmap
+	public static void clearBitmap(Bitmap bm) {
+		bm.recycle();
+		System.gc();
+
+	}
 	
 }
