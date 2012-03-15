@@ -36,6 +36,8 @@ public final class ConfigUtils implements Serializable {
 	private String ipAdress;
 	/** The default Cover */
 	private Bitmap defaultCover;
+	/** The default Banner */
+	private Bitmap defaultBanner;
 	/** The settings file */
 	SharedPreferences preferences;
 	/** The xkey object with list games and infos */
@@ -115,6 +117,15 @@ public final class ConfigUtils implements Serializable {
 
 	public void setDefaultCover(Bitmap defaultCover) {
 		this.defaultCover = defaultCover;
+	}
+
+	
+	public Bitmap getDefaultBanner() {
+		return defaultBanner;
+	}
+
+	public void setDefaultBanner(Bitmap defaultBanner) {
+		this.defaultBanner = defaultBanner;
 	}
 
 	public SharedPreferences getPreferences() {

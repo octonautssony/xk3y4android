@@ -1,9 +1,11 @@
 package xk3y.dongle.android.utils;
 
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -11,10 +13,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import xk3y.dongle.android.R;
 import xk3y.dongle.android.dto.GameInfo;
 import xk3y.dongle.android.dto.Iso;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
@@ -26,9 +26,7 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Shader.TileMode;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Environment;
-import android.widget.ImageButton;
 
 public class LoadingUtils {
 
@@ -167,10 +165,10 @@ public class LoadingUtils {
 			if (ConfigUtils.getConfig().loadBanner()) {
 				Bitmap banner = encodeImageFromBase64(gameInfo.getBanner());
 				// If banner == null then no xml, no banner
-				if (banner != null) {
-					game.setBanner(resizeBanner(banner));
-					//game.setBanner(banner);
+				if (banner == null) {
+					banner = ConfigUtils.getConfig().getDefaultBanner();
 				}
+				game.setBanner(resizeBanner(banner));
 			}
 			
 			// Convert base 64 text to Bitmap
@@ -598,5 +596,6 @@ public class LoadingUtils {
 		System.gc();
 
 	}
+	
 	
 }

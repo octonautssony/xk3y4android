@@ -28,6 +28,10 @@ public class Xk3y4AndroidApplication extends Application {
 		ConfigUtils.getConfig().setDefaultCover(
 				BitmapFactory.decodeResource(getResources(), R.drawable.default_cover));
 		
+		ConfigUtils.getConfig().setDefaultBanner(
+				BitmapFactory.decodeResource(getResources(), R.drawable.default_banner));
+		
+		
 		// changeLanguage("en");
 
 		Intent myIntent = new Intent(this, Xk3y4AndroidActivity.class);
