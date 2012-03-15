@@ -120,7 +120,7 @@ public class Xk3y4AndroidController implements OnClickListener {
 			String listGames = HttpServices.getInstance().getResponseFromUrl(
 					urlToListGames);
 			
-			ErrorReporter.getInstance().putCustomData("\n\nTHEME", String.valueOf(ConfigUtils.getConfig().isLightTheme()));
+			ErrorReporter.getInstance().putCustomData("\n\nTHEME", String.valueOf(ConfigUtils.getConfig().getTheme()));
 			ErrorReporter.getInstance().putCustomData("\n\nDATA_XML", "\n" + listGames);
 			
 			debugMsg += "\nList Games OK";
@@ -163,10 +163,13 @@ public class Xk3y4AndroidController implements OnClickListener {
 					currentGameNameToDebug = "All Games load...";
 					debugMsg += "\nLaunch CoverFlow...";
 					
-					throw new OutOfMemoryError();
-					//Intent myIntent = new Intent(view, CoverFlowGamesActivity.class);
-					//Intent myIntent = new Intent(view, ListGamesActivity.class);
-					//view.startActivity(myIntent);
+					Intent myIntent = null;
+					if (ConfigUtils.getConfig().addCoverTitle()) {
+						myIntent = new Intent(view, CoverFlowGamesActivity.class);
+					} else {
+						myIntent = new Intent(view, ListGamesActivity.class);
+					}
+					view.startActivity(myIntent);
 				}
 				
 			}

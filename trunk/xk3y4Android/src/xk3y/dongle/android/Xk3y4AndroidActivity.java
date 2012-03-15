@@ -52,18 +52,14 @@ public class Xk3y4AndroidActivity extends Activity {
         // Add listener
         addController();
         
-        /*
-        try {
-			LoadingUtils.removeDataCache();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
-        
         File dir = new File (LoadingUtils.GAME_FOLDER_PATH);
 		if (!dir.exists()) {
 			dir.mkdirs();
+		}
+		
+		// Auto load if necessary
+		if (ConfigUtils.getConfig().isAutoLoad()) {
+			controller.onClick(btListGames);
 		}
     }
     
@@ -112,14 +108,21 @@ public class Xk3y4AndroidActivity extends Activity {
 		ConfigUtils.getConfig().setIpAdress(ipAdress);
 		
 		// Load theme
+		/*
 		String lightTheme = preferences.getString(ConfigUtils.LIGHT_THEME, "0");
 		ConfigUtils.getConfig().setLightTheme(Boolean.valueOf(lightTheme));
-		
+		*/
 		/*
 		// Load cache system
 		String cacheData = preferences.getString(ConfigUtils.CACHE_DATA, "1");
 		ConfigUtils.getConfig().setCacheData(Boolean.valueOf(cacheData));
 		*/
+		
+		String theme = preferences.getString(ConfigUtils.THEME, String.valueOf(ConfigUtils.THEME_COVER_FLOW));
+		ConfigUtils.getConfig().setTheme(Integer.valueOf(theme));
+		
+		String autoLoad = preferences.getString(ConfigUtils.AUTO_LOAD, "0");
+		ConfigUtils.getConfig().setAutoLoad(Boolean.valueOf(autoLoad));
 		
 		// Init cover size
 		Display display = getWindowManager().getDefaultDisplay();

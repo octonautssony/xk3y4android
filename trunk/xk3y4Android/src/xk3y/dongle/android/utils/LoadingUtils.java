@@ -134,9 +134,10 @@ public class LoadingUtils {
 				
 				gameInfo.setTitle(parser.getValue(e, KEY_TITLE));
 				gameInfo.setSummary(parser.getValue(e, KEY_SUMMARY));
-				gameInfo.setBanner(parser.getValue(e, KEY_BANNER));
 				gameInfo.setBoxart(parser.getValue(e, KEY_BOXART));
-				
+				if (ConfigUtils.getConfig().loadBanner()) {
+					gameInfo.setBanner(parser.getValue(e, KEY_BANNER));
+				}
 		
 				NodeList genre = e.getElementsByTagName(KEY_INFO);
 				if (nl != null && genre != null) {
@@ -148,9 +149,7 @@ public class LoadingUtils {
 					}
 				}
 			}
-			
-			// Convert base 64 text to Bitmap
-			Bitmap cover = encodeImageFromBase64(gameInfo.getBoxart());
+
 			if (gameInfo.getTitle() != null && !gameInfo.getTitle().equals("")
 					&& !gameInfo.getTitle().equals("No Title")) {
 				game.setTitle(gameInfo.getTitle());
@@ -163,6 +162,19 @@ public class LoadingUtils {
 			if (gameInfo.getSummary() != null && !gameInfo.getSummary().equals("")) {
 				game.setSummary(gameInfo.getSummary());
 			}
+			
+			game.setBanner(null);
+			if (ConfigUtils.getConfig().loadBanner()) {
+				Bitmap banner = encodeImageFromBase64(gameInfo.getBanner());
+				// If banner == null then no xml, no banner
+				if (banner != null) {
+					game.setBanner(resizeBanner(banner));
+					//game.setBanner(banner);
+				}
+			}
+			
+			// Convert base 64 text to Bitmap
+			Bitmap cover = encodeImageFromBase64(gameInfo.getBoxart());
 			// If conver == null then no xml, no cover
 			if (cover == null) {
 				gameInfo = null;
@@ -170,16 +182,8 @@ public class LoadingUtils {
 				addCoverToGame(game, resizeCover(cover));
 			}
 			
-			Bitmap banner = encodeImageFromBase64(gameInfo.getBanner());
-			// If banner == null then no xml, no banner
-			if (banner == null) {
-				game.setBanner(null);
-			} else {
-				game.setBanner(banner);
-				//game.setBanner(banner);
-			}
-			
-			
+
+
 		} catch (Exception e) {
 			gameInfo = null;
 			//throw e;
@@ -223,12 +227,14 @@ public class LoadingUtils {
 			// Set the original cover
 			game.setOriginalCover(cover);
 			
-			if (!ConfigUtils.getConfig().isLightTheme()) {
+			if (ConfigUtils.getConfig().getTheme() == ConfigUtils.THEME_COVER_FLOW) {
 				// Set the cover with text and reflexion
 				Bitmap coverWithReflextion = addReflextionToBitmap(coverWithTitle);
 				game.setCover(coverWithReflextion);
 				coverWithTitle.recycle();
-			} else {
+			} else if (ConfigUtils.getConfig().getTheme() == ConfigUtils.THEME_COVER_LIST) {
+				game.setCover(resizeCoverForList(game.getOriginalCover()));
+			} else if (ConfigUtils.getConfig().getTheme() == ConfigUtils.THEME_COVER_FLOW_LIGHT) {
 				// Set the cover with text without reflexion
 				game.setCover(coverWithTitle);
 			}
@@ -324,14 +330,15 @@ public class LoadingUtils {
 	public static Bitmap resizeBanner(Bitmap cover) throws Exception {
 		Bitmap resizeCover = cover;
 		try {
-			// Resize the image
-			int width  = ConfigUtils.getConfig().getScreenWidth();
-			float tmp = ((float)((float)width / (float)cover.getWidth())) * cover.getHeight();
-			//int newWidth = (int) (tmp * 0.9);
-			int newHeight = (int) tmp;
-
-			resizeCover = Bitmap.createScaledBitmap(cover, width, newHeight, true);
-
+			if (resizeCover != null) {
+				// Resize the image
+				int width  = ConfigUtils.getConfig().getScreenWidth();
+				float tmp = ((float)((float)width / (float)cover.getWidth())) * cover.getHeight();
+				//int newWidth = (int) (tmp * 0.9);
+				int newHeight = (int) tmp;
+	
+				resizeCover = Bitmap.createScaledBitmap(cover, width, newHeight, true);
+			}
 		} catch (Exception e) {
 			throw e;
 		}
@@ -346,27 +353,28 @@ public class LoadingUtils {
 	 * @throws Exception 
 	 */
 	public static Bitmap addTextAtTopOfBitmap(Bitmap img, String text) throws Exception{
-		Bitmap bmOverlay = null;
+		Bitmap bmOverlay = img;
 		try {
-			// create a mutable bitmap with the same size as the background image
-			bmOverlay = Bitmap.createBitmap(img.getWidth(), img.getHeight() + 30, 
-			    Bitmap.Config.ARGB_4444);
-			// create a canvas on which to draw
-			Canvas canvas = new Canvas(bmOverlay);
-	
-			Paint paint = new Paint();
-			paint.setColor(Color.WHITE);
-			paint.setTextSize(20);
-	
-			paint.setFlags(Paint.ANTI_ALIAS_FLAG);
-	
-			// draw the text and the point
-			canvas.drawText(text, 0, 20, paint);
-			// overlay background
-			canvas.drawBitmap(img, 0, 30, paint);
-			
-			canvas.drawPoint(30.0f, 50.0f, paint);
-
+			if (ConfigUtils.getConfig().addCoverTitle()) {
+				// create a mutable bitmap with the same size as the background image
+				bmOverlay = Bitmap.createBitmap(img.getWidth(), img.getHeight() + 30, 
+				    Bitmap.Config.ARGB_4444);
+				// create a canvas on which to draw
+				Canvas canvas = new Canvas(bmOverlay);
+		
+				Paint paint = new Paint();
+				paint.setColor(Color.WHITE);
+				paint.setTextSize(20);
+		
+				paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+		
+				// draw the text and the point
+				canvas.drawText(text, 0, 20, paint);
+				// overlay background
+				canvas.drawBitmap(img, 0, 30, paint);
+				
+				canvas.drawPoint(30.0f, 50.0f, paint);
+			}
 		} catch (Exception e) {
 			throw e;
 		}

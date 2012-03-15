@@ -27,5 +27,14 @@
     <string name="time_played">Times played</string>
     <string name="favorites">Favorites</string>
     <string name="xk3y_info">Xk3y Info</string>
+    <string name="theme">Theme</string>
+    <string name="choose_theme">Choose a Theme</string>
+    <string-array name="theme_array">
+        <item>CoverFlow (default)</item>
+        <item>CoverFlow (light)</item>
+        <item>BannerList (light)</item>
+        <item>CoverList (very light)</item>
+    </string-array>
+    <string name="ckb_auto_start">Games auto loading when app start</string>
     <string name="out_of_memory_error">Sorry but your device not seem have enough memory to run this theme.\n\nYou can try to launch app to cache more data or try an another theme.\n\nIf the problem persist, you must remove some games on your hdd to run this app</string>
 </resources>

@@ -109,13 +109,12 @@ public class ListGamesActivity extends Activity {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			/*
-			if (biblio.get(position).getBanner() == null) {
+			
+			if (!ConfigUtils.getConfig().loadBanner()) {
 				convertView = getViewWithCover(position, convertView, parent);
 			} else {
 				convertView = getViewWithBanner(position, convertView, parent);
-			}*/
-			convertView = getViewWithCover(position, convertView, parent);
+			}
 
 			return convertView;
 		}
@@ -136,7 +135,7 @@ public class ListGamesActivity extends Activity {
 			
 			//holder.tvTitre.setText(biblio.get(position).getTitre());
 			try {
-				holder.tvBanner.setImageBitmap(LoadingUtils.resizeBanner(biblio.get(position).getBanner()));
+				holder.tvBanner.setImageBitmap(biblio.get(position).getBanner());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -161,7 +160,7 @@ public class ListGamesActivity extends Activity {
 			
 			holder.tvTitre.setText(biblio.get(position).getTitle());
 			try {
-				holder.tvBanner.setImageBitmap(LoadingUtils.resizeCoverForList(biblio.get(position).getOriginalCover()));
+				holder.tvBanner.setImageBitmap(biblio.get(position).getCover());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

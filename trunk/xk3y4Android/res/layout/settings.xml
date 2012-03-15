@@ -11,7 +11,7 @@
     >
     <TextView
 	    android:id="@+id/txt_settings"
-	    android:layout_margin="40px"
+	    android:layout_margin="30px"
 	    android:textStyle="bold"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
         
 	<TextView
 	    android:id="@+id/txt_ip_label"
-	    android:layout_marginLeft="15px"
+	    android:layout_marginLeft="10px"
 	    android:textStyle="normal"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
@@ -28,36 +28,59 @@
 	
 	<EditText
 	    android:id="@+id/txt_ip"
-	    android:layout_margin="15px"
+	    android:layout_margin="10px"
 	    android:textStyle="normal"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:text="" android:textSize="12sp"/>
 	
+	<TextView
+	    android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+	    android:textStyle="normal"
+	    android:layout_marginLeft="10px"
+        android:layout_marginTop="16sp"
+        android:text="@string/theme"
+    />
+	
+    <Spinner 
+        android:layout_margin="10px"
+        android:id="@+id/spinner_theme"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:prompt="@string/choose_theme"
+    />
+    <!-- 
 	<CheckBox android:id="@+id/ckb_light_theme"
 	    android:layout_margin="15px"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ckb_light" />
-	
+	 -->
+	 
 	<CheckBox android:id="@+id/ckb_clear_cache"
-	    android:layout_margin="15px"
+	    android:layout_margin="10px"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ckb_clear_cache" />
+
+	<CheckBox android:id="@+id/ckb_auto_start"
+	    android:layout_margin="10px"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ckb_auto_start" />
 	
+	<LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center_horizontal"
+	     android:layout_marginTop="30px"
+	    >
+	    <Button android:text="@string/back" android:background="@drawable/rounded_button" android:layout_width="wrap_content" android:id="@+id/bt_back" android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:padding="15px" android:textSize="20dp" android:layout_marginRight="30px" android:minWidth="150px" android:layout_marginBottom="40px"></Button>
+		<Button android:text="@string/save" android:background="@drawable/rounded_button" android:id="@+id/bt_save"  android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:padding="15px" android:textSize="20dp" android:layout_width="wrap_content" android:minWidth="150px"></Button>
 	
-		<LinearLayout
-		    android:orientation="horizontal"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_gravity="center_horizontal"
-		     android:layout_marginTop="30px"
-		    >
-		    <Button android:text="@string/back" android:background="@drawable/rounded_button" android:layout_width="wrap_content" android:id="@+id/bt_back" android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:padding="15px" android:textSize="20dp" android:layout_marginRight="30px" android:minWidth="150px" android:layout_marginBottom="40px"></Button>
-			<Button android:text="@string/save" android:background="@drawable/rounded_button" android:id="@+id/bt_save"  android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:padding="15px" android:textSize="20dp" android:layout_width="wrap_content" android:minWidth="150px"></Button>
-		
-		</LinearLayout>
+	</LinearLayout>
 </LinearLayout>
 </ScrollView>
 

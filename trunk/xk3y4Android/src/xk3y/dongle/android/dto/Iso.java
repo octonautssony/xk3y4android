@@ -9,6 +9,7 @@ import java.io.Serializable;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
+import xk3y.dongle.android.utils.ConfigUtils;
 import xk3y.dongle.android.utils.LoadingUtils;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -95,17 +96,19 @@ public class Iso implements Serializable {
 	    out.writeUTF(summary);
 	    out.writeUTF(gender);
 	 
-	    String strBanner = " ";
-		try {
-			if (banner != null) {
-				strBanner = LoadingUtils.convertImageToBase64(banner);
+	    if (ConfigUtils.getConfig().loadBanner()) {
+		    String strBanner = " ";
+			try {
+				if (banner != null) {
+					strBanner = LoadingUtils.convertImageToBase64(banner);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	    out.writeUTF(strBanner);
-
+		    out.writeUTF(strBanner);
+	    }
+	    
 	    ByteArrayOutputStream stream = new ByteArrayOutputStream();
 	    originalCover.compress(Bitmap.CompressFormat.PNG, 100, stream);
 	    this.imageByteArray = stream.toByteArray();
@@ -129,20 +132,21 @@ public class Iso implements Serializable {
         summary = in.readUTF();
         gender = in.readUTF();
 	 
+        if (ConfigUtils.getConfig().loadBanner()) {
+	        String strBanner = in.readUTF();
+			try {
+				banner = LoadingUtils.encodeImageFromBase64(strBanner);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
         
-        String strBanner = in.readUTF();
-		try {
-			banner = LoadingUtils.encodeImageFromBase64(strBanner);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 	    this.imageByteArray = (byte[]) in.readObject();
 	    originalCover = BitmapFactory.decodeByteArray(this.imageByteArray,
 	                                               0, this.imageByteArray.length);
 
-	
+        
 /*
 	    this.bannerByteArray = (byte[]) in.readObject();
 	    banner = BitmapFactory.decodeByteArray(this.bannerByteArray,

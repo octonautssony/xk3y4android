@@ -44,11 +44,15 @@ public class SettingsController implements OnClickListener {
 	private void saveSettings() {
 		try {
 			ConfigUtils.getConfig().setIpAdress(view.getTextIp().getText().toString());
-			ConfigUtils.getConfig().setLightTheme(view.getCkbLightTheme().isChecked());
+			int selectedTheme = view.getSpinnerTheme().getSelectedItemPosition();
+			ConfigUtils.getConfig().setTheme(view.getSpinnerTheme().getSelectedItemPosition());
+			ConfigUtils.getConfig().setAutoLoad(view.getCkbAutoLoad().isChecked());
+			//ConfigUtils.getConfig().setLightTheme(view.getCkbLightTheme().isChecked());
 			//ConfigUtils.getConfig().setCacheData(view.getCkbCacheData().isChecked());
+			
 			Toast.makeText(view, R.string.setting_save, Toast.LENGTH_SHORT).show();
 			
-			if (view.getCkbClearCache().isChecked()) {
+			if (view.getCkbClearCache().isChecked() || selectedTheme != view.getSaveTheme()) {
 				LoadingUtils.removeDataCache();
 				Toast.makeText(view, R.string.clear_cache, Toast.LENGTH_SHORT).show();
 			}

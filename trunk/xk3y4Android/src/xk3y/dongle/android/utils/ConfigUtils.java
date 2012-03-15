@@ -24,8 +24,13 @@ public final class ConfigUtils implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public static final String IP_ADRESS = "IP_ADRESSS";
-    public static final String LIGHT_THEME = "LIGHT_THEME";
     public static final String CACHE_DATA = "CACHE_DATA";
+    public static final String AUTO_LOAD = "AUTO_LOAD";
+    public static final String THEME = "THEME";
+    public static final int THEME_COVER_FLOW = 0;
+    public static final int THEME_COVER_FLOW_LIGHT = 1;
+    public static final int THEME_BANNER_LIST = 2;
+    public static final int THEME_COVER_LIST = 3;
     
 	/** The Xkey IP adress */
 	private String ipAdress;
@@ -48,9 +53,13 @@ public final class ConfigUtils implements Serializable {
 	/** Avoid to reload All Cover */
 	private boolean alreadyLoad = false;
 	/** Light theme without reflection */
-	private boolean lightTheme = false;
+	//private boolean lightTheme = false;
 	/** Cache data to start more quicly */
 	private boolean cacheData = true;
+	/** The selected theme */
+	private int theme;
+	/** Games auto loading */
+	private boolean autoLoad = false;
 	
 	private static ConfigUtils instance;
 
@@ -147,14 +156,24 @@ public final class ConfigUtils implements Serializable {
 	public void setSelectedGame(Iso selectedGame) {
 		this.selectedGame = selectedGame;
 	}
-
-	public boolean isLightTheme() {
-		return lightTheme;
+	
+	public int getTheme() {
+		return theme;
 	}
 
-	public void setLightTheme(boolean lightTheme) {
-		this.lightTheme = lightTheme;
-		savePreferences(LIGHT_THEME, String.valueOf(lightTheme));
+	public void setTheme(int theme) {
+		this.theme = theme;
+		savePreferences(THEME, String.valueOf(theme));
+	}
+
+	
+	public boolean isAutoLoad() {
+		return autoLoad;
+	}
+
+	public void setAutoLoad(boolean autoLoad) {
+		this.autoLoad = autoLoad;
+		savePreferences(AUTO_LOAD, String.valueOf(autoLoad));
 	}
 
 	public boolean isCacheData() {
@@ -169,6 +188,23 @@ public final class ConfigUtils implements Serializable {
 		this.screenWidth = screenWidth;
 	}
 
+	/** Switch theme, load the banner */
+	public boolean loadBanner() {
+		boolean res = false;
+		if (getTheme() == THEME_BANNER_LIST) {
+			res = true;
+		}
+		return res;
+	}
+	
+	/** Switch theme, add title over cover */
+	public boolean addCoverTitle() {
+		boolean res = false;
+		if (getTheme() == THEME_COVER_FLOW || getTheme() == THEME_COVER_FLOW_LIGHT) {
+			res = true;
+		}
+		return res;
+	}
 	
 	/*
 	public void setCacheData(boolean cacheData) {
