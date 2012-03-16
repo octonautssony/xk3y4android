@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Comparator;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
@@ -206,7 +207,24 @@ public class Iso implements Serializable {
 		this.banner = banner;
 	}
 	
-	
+	/**
+	 * Sort iso by title
+	 */
+	public static Comparator<Iso> TitleComparator = new Comparator<Iso>() {
+
+		public int compare(Iso iso1, Iso iso2) {
+
+			String title1 = iso1.getTitle().toUpperCase();
+			String title2 = iso2.getTitle().toUpperCase();
+
+			// ascending order
+			return title1.compareTo(title2);
+
+			// descending order
+			// return fruitName2.compareTo(fruitName1);
+		}
+
+	};
 	
 	
 }

@@ -2,6 +2,7 @@ package xk3y.dongle.android;
 
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.Collections;
 import java.util.List;
 
 import org.acra.ErrorReporter;
@@ -148,6 +149,7 @@ public class Xk3y4AndroidController implements OnClickListener {
 
 					// Load game info
 					int cptLoad = 0;
+					Collections.sort(listIsos, Iso.TitleComparator);
 					for (Iso game : listIsos){
 						cptLoad++;
 						currentGameNameToDebug = game.getTitle();
