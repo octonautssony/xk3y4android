@@ -3,6 +3,7 @@ package xk3y.dongle.android.utils;
 import java.io.Serializable;
 import java.util.List;
 
+import xk3y.dongle.android.dto.FullGameInfo;
 import xk3y.dongle.android.dto.Iso;
 import xk3y.dongle.android.dto.Xkey;
 import android.content.SharedPreferences;
@@ -43,9 +44,9 @@ public final class ConfigUtils implements Serializable {
 	/** The xkey object with list games and infos */
 	private Xkey xkey;
 	/** The list of games In all partitions*/
-	private List<Iso> listeGames;
+	private List<FullGameInfo> listeGames;
 	/** The game selected by the user */
-	private Iso selectedGame;
+	private FullGameInfo selectedGame;
 	/** The screen with */
 	private int screenWidth;
 	/** The cover with */
@@ -90,15 +91,15 @@ public final class ConfigUtils implements Serializable {
 
 	public void setXkey(Xkey xkey) {
 		this.xkey = xkey;
-		listeGames = xkey.getListeGames();
+		LoadingUtils.saveXkeyOnSdCard(xkey);
 	}
 
 	
-	public List<Iso> getListeGames() {
+	public List<FullGameInfo> getListeGames() {
 		return listeGames;
 	}
 
-	public void setListeGames(List<Iso> listeGames) {
+	public void setListeGames(List<FullGameInfo> listeGames) {
 		this.listeGames = listeGames;
 	}
 
@@ -160,11 +161,11 @@ public final class ConfigUtils implements Serializable {
 		this.alreadyLoad = alreadyLoad;
 	}
 
-	public Iso getSelectedGame() {
+	public FullGameInfo getSelectedGame() {
 		return selectedGame;
 	}
 
-	public void setSelectedGame(Iso selectedGame) {
+	public void setSelectedGame(FullGameInfo selectedGame) {
 		this.selectedGame = selectedGame;
 	}
 	

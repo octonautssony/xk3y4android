@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xk3y.dongle.android.R;
-import xk3y.dongle.android.dto.Iso;
+import xk3y.dongle.android.dto.FullGameInfo;
 import xk3y.dongle.android.ihm.GameDetailsActivity;
 import xk3y.dongle.android.utils.ConfigUtils;
 import xk3y.dongle.android.utils.CoverFlow;
@@ -43,7 +43,7 @@ import android.widget.ImageView;
 
 public class CoverFlowGamesActivity extends Activity {
 	private CoverFlow coverFlow;
-	private List<Iso> listGames = new ArrayList<Iso>();
+	private List<FullGameInfo> listGames = new ArrayList<FullGameInfo>();
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -75,8 +75,8 @@ public class CoverFlowGamesActivity extends Activity {
 			public void onItemClick(AdapterView arg0, View v, int position,
 					long rowID) {
 				
-				Iso iso = ConfigUtils.getConfig().getListeGames().get(position);
-				ConfigUtils.getConfig().setSelectedGame(iso);
+				FullGameInfo FullGameInfo = ConfigUtils.getConfig().getListeGames().get(position);
+				ConfigUtils.getConfig().setSelectedGame(FullGameInfo);
 				
 				// Open liste games window
 				Intent myIntent = new Intent(CoverFlowGamesActivity.this, GameDetailsActivity.class);
@@ -113,12 +113,12 @@ public class CoverFlowGamesActivity extends Activity {
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
-			final Iso iso = listGames.get(position);
+			final FullGameInfo FullGameInfo = listGames.get(position);
 			// Use this code if you want to load from resources
 			ImageView i = new ImageView(mContext);
-			i.setImageBitmap(iso.getCover());
-			int width = iso.getCover().getWidth();
-			int height = iso.getCover().getHeight();
+			i.setImageBitmap(FullGameInfo.getCover());
+			int width = FullGameInfo.getCover().getWidth();
+			int height = FullGameInfo.getCover().getHeight();
 			
 			i.setLayoutParams(new CoverFlow.LayoutParams(width, height));
 			i.setScaleType(ImageView.ScaleType.CENTER_INSIDE);

@@ -1,9 +1,9 @@
 package xk3y.dongle.android.ihm;
 
 import xk3y.dongle.android.R;
-import xk3y.dongle.android.dto.Iso;
+import xk3y.dongle.android.dto.FullGameInfo;
 import xk3y.dongle.android.utils.ConfigUtils;
-import xk3y.dongle.android.utils.LoadingUtils;
+import xk3y.dongle.android.utils.ImageUtils;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Window;
@@ -26,7 +26,7 @@ public class GameDetailsActivity extends Activity {
 	private Button btLaunchGame;
 	private Button btBack;
 	private GameDetailsController controller;
-	private Iso currentGame;
+	private FullGameInfo currentGame;
 	
     /** Called when the activity is first created. */
     @Override
@@ -66,7 +66,7 @@ public class GameDetailsActivity extends Activity {
 	    	// The cover
 	    	coverView = (ImageView)findViewById(R.id.img_cover_view);
 	    	coverView.setImageBitmap(
-	    			LoadingUtils.resizeCoverForGameDetails(currentGame.getOriginalCover()));
+	    			ImageUtils.resizeCoverForGameDetails(currentGame.getOriginalCover()));
 	    	
 	    	// The title
 	    	textGameTitle = (TextView)findViewById(R.id.txt_title);
@@ -116,7 +116,7 @@ public class GameDetailsActivity extends Activity {
 		return btBack;
 	}
 
-	public Iso getCurrentGame() {
+	public FullGameInfo getCurrentGame() {
 		return currentGame;
 	}
 

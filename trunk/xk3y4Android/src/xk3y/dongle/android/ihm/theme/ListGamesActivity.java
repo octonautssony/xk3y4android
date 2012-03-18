@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xk3y.dongle.android.R;
-import xk3y.dongle.android.dto.Iso;
+import xk3y.dongle.android.dto.FullGameInfo;
+import xk3y.dongle.android.dto.FullGameInfo;
 import xk3y.dongle.android.ihm.GameDetailsActivity;
 import xk3y.dongle.android.utils.ConfigUtils;
 import xk3y.dongle.android.utils.LoadingUtils;
@@ -31,7 +32,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class ListGamesActivity extends Activity {
 
 	private ListView lvListe;
-	List<Iso> maBibliotheque = new ArrayList<Iso>();
+	List<FullGameInfo> maBibliotheque = new ArrayList<FullGameInfo>();
 	
     /** Called when the activity is first created. */
     @Override
@@ -62,8 +63,8 @@ public class ListGamesActivity extends Activity {
 			public void onItemClick(AdapterView arg0, View v, int position,
 					long rowID) {
 				
-				Iso iso = ConfigUtils.getConfig().getListeGames().get(position);
-				ConfigUtils.getConfig().setSelectedGame(iso);
+				FullGameInfo FullGameInfo = ConfigUtils.getConfig().getListeGames().get(position);
+				ConfigUtils.getConfig().setSelectedGame(FullGameInfo);
 				
 				// Open liste games window
 				Intent myIntent = new Intent(ListGamesActivity.this, GameDetailsActivity.class);
@@ -79,10 +80,10 @@ public class ListGamesActivity extends Activity {
 
 	public class ListGamesAdapter extends BaseAdapter {
 
-		List<Iso> biblio;
+		List<FullGameInfo> biblio;
 		LayoutInflater inflater;
 		
-		public ListGamesAdapter(Context context,List<Iso> biblio) {
+		public ListGamesAdapter(Context context,List<FullGameInfo> biblio) {
 			inflater = LayoutInflater.from(context);
 			this.biblio = biblio;
 		}

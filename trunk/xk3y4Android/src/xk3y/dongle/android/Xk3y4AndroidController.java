@@ -2,11 +2,13 @@ package xk3y.dongle.android;
 
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import org.acra.ErrorReporter;
 
+import xk3y.dongle.android.dto.FullGameInfo;
 import xk3y.dongle.android.dto.Iso;
 import xk3y.dongle.android.dto.Xkey;
 import xk3y.dongle.android.ihm.SettingsActivity;
@@ -118,63 +120,71 @@ public class Xk3y4AndroidController implements OnClickListener {
 			
 			urlToListGames = "http://" + ConfigUtils.getConfig().getIpAdress()
 					+ "/data.xml";
-			String listGames = HttpServices.getInstance().getResponseFromUrl(
+			String xkeyInfo = HttpServices.getInstance().getResponseFromUrl(
 					urlToListGames);
 			
 			ErrorReporter.getInstance().putCustomData("\n\nTHEME", String.valueOf(ConfigUtils.getConfig().getTheme()));
-			ErrorReporter.getInstance().putCustomData("\n\nDATA_XML", "\n" + listGames);
+			ErrorReporter.getInstance().putCustomData("\n\nDATA_XML", "\n" + xkeyInfo);
 			
 			debugMsg += "\nList Games OK";
-			if (listGames == null
-					|| (listGames != null && listGames.equals(""))) {
+			if (xkeyInfo == null
+					|| (xkeyInfo != null && xkeyInfo.equals(""))) {
 				
 				debugMsg += "\nNo Xkey Connexion";
-				
-				SHOW_ERROR = true;
-				error_to_display = R.string.not_connected;
+				Xkey xkey = LoadingUtils.loadXkeyFromSdCard();
+				if (xkey == null) {
+					SHOW_ERROR = true;
+					error_to_display = R.string.not_connected;
+				} else {
+					ConfigUtils.getConfig().setXkey(xkey);
+				}
 			} else {
 				// Generate xkey object from xml flow
 				debugMsg += "\nConvert XML to Object...";
-				Reader reader = new StringReader(listGames);
+				Reader reader = new StringReader(xkeyInfo);
 				Xkey xkey = Xk3yParserUtils.getXkey(reader);
 				ConfigUtils.getConfig().setXkey(xkey);
 				debugMsg += "\nConvert XML to Object OK";
-				
-				List<Iso> listIsos = ConfigUtils.getConfig().getListeGames();
-				if (listIsos == null || (listIsos != null && listIsos.isEmpty())) {
-					debugMsg += "\nNo Game detected";
-					SHOW_ERROR = true;
-					error_to_display = R.string.no_games;
-				} else {
+			}	
+			
+			List<Iso> listIsos = ConfigUtils.getConfig().getXkey().getListeGames();
+			if (listIsos == null || (listIsos != null && listIsos.isEmpty())) {
+				debugMsg += "\nNo Game detected";
+				SHOW_ERROR = true;
+				error_to_display = R.string.no_games;
+			} else {
 
-					// Load game info
-					int cptLoad = 0;
-					Collections.sort(listIsos, Iso.TitleComparator);
-					for (Iso game : listIsos){
-						cptLoad++;
-						currentGameNameToDebug = game.getTitle();
-						progressLoadingMessage = defaultLoadingMessage
-								+ "\nLoading game "+ cptLoad + "/" + listIsos.size()
-								+ "\n"+ game.getTitle();
-						sendMessage(UPDATE_PROGRESS);
-						LoadingUtils.loadGameInfo(game);
+				// Load game info
+				List<FullGameInfo> listGames = new ArrayList<FullGameInfo>();
+				int cptLoad = 0;
+				Collections.sort(listIsos, Iso.TitleComparator);
+				for (Iso game : listIsos){
+					cptLoad++;
+					currentGameNameToDebug = game.getTitle();
+					progressLoadingMessage = defaultLoadingMessage
+							+ "\nLoading game "+ cptLoad + "/" + listIsos.size()
+							+ "\n"+ game.getTitle();
+					sendMessage(UPDATE_PROGRESS);
+					listGames.add(LoadingUtils.loadGameInfo(game));
 
-					}
-
-					// Open list games window
-					currentGameNameToDebug = "All Games load...";
-					debugMsg += "\nLaunch CoverFlow...";
-					
-					Intent myIntent = null;
-					if (ConfigUtils.getConfig().addCoverTitle()) {
-						myIntent = new Intent(view, CoverFlowGamesActivity.class);
-					} else {
-						myIntent = new Intent(view, ListGamesActivity.class);
-					}
-					view.startActivity(myIntent);
 				}
+
+				 ConfigUtils.getConfig().setListeGames(listGames);
+				 
+				// Open list games window
+				currentGameNameToDebug = "All Games load...";
+				debugMsg += "\nLaunch CoverFlow...";
 				
+				Intent myIntent = null;
+				if (ConfigUtils.getConfig().addCoverTitle()) {
+					myIntent = new Intent(view, CoverFlowGamesActivity.class);
+				} else {
+					myIntent = new Intent(view, ListGamesActivity.class);
+				}
+				view.startActivity(myIntent);
 			}
+			
+			
 			
 		} catch (OutOfMemoryError E) {
 			//progressDialog.setMessage("boooom");

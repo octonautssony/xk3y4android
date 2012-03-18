@@ -1,7 +1,7 @@
 package xk3y.dongle.android.dto;
 
 
-public class GameInfo {
+public class XmlGameInfo {
 	
 	private String title;
 	private String summary;
