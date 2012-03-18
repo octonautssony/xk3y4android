@@ -1,6 +1,5 @@
 package xk3y.dongle.android.utils;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -16,16 +15,6 @@ import xk3y.dongle.android.dto.Iso;
 import xk3y.dongle.android.dto.Xkey;
 import xk3y.dongle.android.dto.XmlGameInfo;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.LinearGradient;
-import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.PorterDuff.Mode;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Shader.TileMode;
 import android.os.Environment;
 
 public class LoadingUtils {

@@ -46,6 +46,7 @@ public class SettingsController implements OnClickListener {
 			ConfigUtils.getConfig().setIpAdress(view.getTextIp().getText().toString());
 			int selectedTheme = view.getSpinnerTheme().getSelectedItemPosition();
 			ConfigUtils.getConfig().setTheme(view.getSpinnerTheme().getSelectedItemPosition());
+			ConfigUtils.getConfig().setNbSplit(view.getSpinnerSplit().getSelectedItemPosition());
 			ConfigUtils.getConfig().setAutoLoad(view.getCkbAutoLoad().isChecked());
 			//ConfigUtils.getConfig().setLightTheme(view.getCkbLightTheme().isChecked());
 			//ConfigUtils.getConfig().setCacheData(view.getCkbCacheData().isChecked());

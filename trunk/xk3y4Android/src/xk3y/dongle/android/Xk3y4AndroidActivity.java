@@ -10,8 +10,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Display;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
@@ -120,6 +118,9 @@ public class Xk3y4AndroidActivity extends Activity {
 		
 		String theme = preferences.getString(ConfigUtils.THEME, String.valueOf(ConfigUtils.THEME_COVER_FLOW));
 		ConfigUtils.getConfig().setTheme(Integer.valueOf(theme));
+		
+		String nbSplit = preferences.getString(ConfigUtils.NB_SPLIT, "0");
+		ConfigUtils.getConfig().setNbSplit(Integer.valueOf(nbSplit));
 		
 		String autoLoad = preferences.getString(ConfigUtils.AUTO_LOAD, "0");
 		ConfigUtils.getConfig().setAutoLoad(Boolean.valueOf(autoLoad));

@@ -4,16 +4,12 @@ import xk3y.dongle.android.R;
 import xk3y.dongle.android.utils.ConfigUtils;
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 /**
  * Main class
@@ -24,6 +20,7 @@ public class SettingsActivity extends Activity {
 	
 	//private CheckBox ckbCacheData;
 	private Spinner spinnerTheme;
+	private Spinner spinnerSplit;
 	//private CheckBox ckbLightTheme;
 	private CheckBox ckbClearCache;
 	private CheckBox ckbAutoLoad;
@@ -32,6 +29,7 @@ public class SettingsActivity extends Activity {
 	private Button btBack;
 	private SettingsController controller;
 	private int saveTheme;
+	private int saveNbSplit;
 	
     /** Called when the activity is first created. */
     @Override
@@ -88,6 +86,15 @@ public class SettingsActivity extends Activity {
 	        saveTheme = ConfigUtils.getConfig().getTheme();
 	        spinnerTheme.setSelection(saveTheme);
 	        
+	        spinnerSplit = (Spinner) findViewById(R.id.spinner_split);
+	        ArrayAdapter<CharSequence> adapterSplit = ArrayAdapter.createFromResource(
+	                this, R.array.split_array, android.R.layout.simple_spinner_item);
+	        adapterSplit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	        spinnerSplit.setAdapter(adapterSplit);
+	        saveNbSplit = ConfigUtils.getConfig().getNbSplit();
+	        spinnerSplit.setSelection(saveNbSplit - 1);
+	        
+	        
     	} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -140,6 +147,11 @@ public class SettingsActivity extends Activity {
 		return saveTheme;
 	}
 
+	public Spinner getSpinnerSplit() {
+		return spinnerSplit;
+	}
+
+	
 	
 	
 	

@@ -7,7 +7,6 @@ import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 
 import xk3y.dongle.android.utils.ConfigUtils;
-
 import android.app.Application;
 import android.content.Intent;
 import android.content.res.Configuration;

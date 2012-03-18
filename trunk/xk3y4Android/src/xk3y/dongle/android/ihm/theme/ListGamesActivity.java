@@ -5,10 +5,8 @@ import java.util.List;
 
 import xk3y.dongle.android.R;
 import xk3y.dongle.android.dto.FullGameInfo;
-import xk3y.dongle.android.dto.FullGameInfo;
 import xk3y.dongle.android.ihm.GameDetailsActivity;
 import xk3y.dongle.android.utils.ConfigUtils;
-import xk3y.dongle.android.utils.LoadingUtils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -18,18 +16,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 /**
  * View vith the games
  * @author maloups
  *
  */
-public class ListGamesActivity extends Activity {
+public class ListGamesActivity extends ThemeActivity {
 
 	private ListView lvListe;
 	List<FullGameInfo> maBibliotheque = new ArrayList<FullGameInfo>();

@@ -37,4 +37,18 @@
     </string-array>
     <string name="ckb_auto_start">Games auto loading when app start</string>
     <string name="out_of_memory_error">Sorry but your device not seem have enough memory to run this theme.\n\nYou can try to launch app to cache more data or try an another theme.\n\nIf the problem persist, you must remove some games on your hdd to run this app</string>
+    <string name="split_by_page">Split by page</string>
+    <string name="choose_split">Choose number of pages</string>
+    <string-array name="split_array">
+        <item>1 (default)</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
 </resources>

@@ -28,37 +28,41 @@ import xk3y.dongle.android.dto.FullGameInfo;
 import xk3y.dongle.android.ihm.GameDetailsActivity;
 import xk3y.dongle.android.utils.ConfigUtils;
 import xk3y.dongle.android.utils.CoverFlow;
+import xk3y.dongle.android.utils.PaginateButton;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
-public class CoverFlowGamesActivity extends Activity {
+public class CoverFlowGamesActivity extends ThemeActivity {
 	private CoverFlow coverFlow;
 	private List<FullGameInfo> listGames = new ArrayList<FullGameInfo>();
+	private LinearLayout paginateLayout;
 	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		//dalvik.system.VMRuntime.getRuntime().setMinimumHeapSize(64 * 1024 * 1024);
-		
+
 		requestWindowFeature(Window.FEATURE_LEFT_ICON);
-		
+
 		listGames = ConfigUtils.getConfig().getListeGames();
+		
 		
 		//CoverFlow coverFlow;
 		coverFlow = new CoverFlow(this);
-
 		coverFlow.setAdapter(new ImageAdapter(this));
 
 		ImageAdapter coverImageAdapter = new ImageAdapter(this);
@@ -85,13 +89,37 @@ public class CoverFlowGamesActivity extends Activity {
 		});
 		
 
-		setContentView(coverFlow);
+		//setContentView(coverFlow);
+		setContentView(R.layout.cover_flow);
 		
+		Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+		int orientation = display.getOrientation();
+		
+		// Search if user want to split by page
+		int nbSplit = ConfigUtils.getConfig().getNbSplit() + 1;
+		if (nbSplit != 1) {
+			if(orientation ==  0) {
+				//portrait
+				addContentView(coverFlow, new LayoutParams(LayoutParams.FILL_PARENT, ConfigUtils.getConfig().getScreenWidth() + 100));
+			} else {
+				//landscape
+				addContentView(coverFlow, new LayoutParams(display.getWidth() - 100, LayoutParams.FILL_PARENT));
+			}
+			// Add button if pagination
+			paginateLayout = (LinearLayout)findViewById(R.id.paginate_layout);
+			for (int i = 1; i <= nbSplit; i++) {
+				paginateLayout.addView(new PaginateButton(this, String.valueOf(i)));
+			}
+		} else {
+			addContentView(coverFlow, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		}
+	
 		// Icon of the app
         setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.ic_launcher);
 
 	}
 
+	
 	public class ImageAdapter extends BaseAdapter {
 		int mGalleryItemBackground;
 		private Context mContext;

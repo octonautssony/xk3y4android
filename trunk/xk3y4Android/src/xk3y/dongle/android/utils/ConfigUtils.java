@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import xk3y.dongle.android.dto.FullGameInfo;
-import xk3y.dongle.android.dto.Iso;
 import xk3y.dongle.android.dto.Xkey;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -28,6 +27,8 @@ public final class ConfigUtils implements Serializable {
     public static final String CACHE_DATA = "CACHE_DATA";
     public static final String AUTO_LOAD = "AUTO_LOAD";
     public static final String THEME = "THEME";
+    public static final String NB_SPLIT = "NB_SPLIT";
+    
     public static final int THEME_COVER_FLOW = 0;
     public static final int THEME_COVER_FLOW_LIGHT = 1;
     public static final int THEME_BANNER_LIST = 2;
@@ -61,6 +62,8 @@ public final class ConfigUtils implements Serializable {
 	private boolean cacheData = true;
 	/** The selected theme */
 	private int theme;
+	/** The selected nb split by page */
+	private int nbSplit;
 	/** Games auto loading */
 	private boolean autoLoad = false;
 	
@@ -179,6 +182,15 @@ public final class ConfigUtils implements Serializable {
 	}
 
 	
+	public int getNbSplit() {
+		return nbSplit;
+	}
+
+	public void setNbSplit(int nbSplit) {
+		this.nbSplit = nbSplit;
+		savePreferences(NB_SPLIT, String.valueOf(nbSplit));
+	}
+
 	public boolean isAutoLoad() {
 		return autoLoad;
 	}
