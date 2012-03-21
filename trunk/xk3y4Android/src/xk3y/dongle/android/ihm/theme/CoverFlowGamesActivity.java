@@ -96,8 +96,9 @@ public class CoverFlowGamesActivity extends ThemeActivity {
 		int orientation = display.getOrientation();
 		
 		// Search if user want to split by page
-		int nbSplit = ConfigUtils.getConfig().getNbSplit() + 1;
-		if (nbSplit != 1) {
+
+		int nbPage = ConfigUtils.getConfig().getNbPages();
+		if (nbPage != 1) {
 			if(orientation ==  0) {
 				//portrait
 				addContentView(coverFlow, new LayoutParams(LayoutParams.FILL_PARENT, ConfigUtils.getConfig().getScreenWidth() + 100));
@@ -107,7 +108,7 @@ public class CoverFlowGamesActivity extends ThemeActivity {
 			}
 			// Add button if pagination
 			paginateLayout = (LinearLayout)findViewById(R.id.paginate_layout);
-			for (int i = 1; i <= nbSplit; i++) {
+			for (int i = 1; i <= nbPage; i++) {
 				paginateLayout.addView(new PaginateButton(this, String.valueOf(i)));
 			}
 		} else {

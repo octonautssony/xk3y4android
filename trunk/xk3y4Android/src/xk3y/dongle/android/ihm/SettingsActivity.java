@@ -92,7 +92,7 @@ public class SettingsActivity extends Activity {
 	        adapterSplit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	        spinnerSplit.setAdapter(adapterSplit);
 	        saveNbSplit = ConfigUtils.getConfig().getNbSplit();
-	        spinnerSplit.setSelection(saveNbSplit - 1);
+	        spinnerSplit.setSelection(saveNbSplit);
 	        
 	        
     	} catch (Exception e) {

@@ -34,6 +34,8 @@ public final class ConfigUtils implements Serializable {
     public static final int THEME_BANNER_LIST = 2;
     public static final int THEME_COVER_LIST = 3;
     
+    public static final int NB_GAME_INCREMENT = 5;
+    
 	/** The Xkey IP adress */
 	private String ipAdress;
 	/** The default Cover */
@@ -50,6 +52,8 @@ public final class ConfigUtils implements Serializable {
 	private FullGameInfo selectedGame;
 	/** The screen with */
 	private int screenWidth;
+	/** The screen with */
+	private int screenHeight;
 	/** The cover with */
 	private int coverWidth;
 	/** The cover height */
@@ -212,6 +216,14 @@ public final class ConfigUtils implements Serializable {
 		this.screenWidth = screenWidth;
 	}
 
+	public int getScreenHeight() {
+		return screenHeight;
+	}
+
+	public void setScreenHeight(int screenHeight) {
+		this.screenHeight = screenHeight;
+	}
+
 	/** Switch theme, load the banner */
 	public boolean loadBanner() {
 		boolean res = false;
@@ -229,6 +241,29 @@ public final class ConfigUtils implements Serializable {
 		}
 		return res;
 	}
+	
+	/**
+	 * Get the number of pages to display
+	 * @return the number of pages to display
+	 */
+	public int getNbPages() {
+		int nbGameToLoad = getNbGamesToLoad();
+		int nbPage = 1;
+		if (nbSplit != 0) {
+			nbPage = (ConfigUtils.getConfig().getListeGames().size() / nbGameToLoad) + 1;
+		}
+		return nbPage;
+	}
+	
+	
+	/**
+	 * Get the number of games to load
+	 * @return the number of games to load
+	 */
+	public int getNbGamesToLoad() {
+		return nbSplit * NB_GAME_INCREMENT;
+	}
+	
 	
 	/*
 	public void setCacheData(boolean cacheData) {

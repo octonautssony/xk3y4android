@@ -120,6 +120,9 @@ public class Xk3y4AndroidActivity extends Activity {
 		ConfigUtils.getConfig().setTheme(Integer.valueOf(theme));
 		
 		String nbSplit = preferences.getString(ConfigUtils.NB_SPLIT, "0");
+		if (Integer.valueOf(nbSplit) > 4) {
+			nbSplit = "0";
+		}
 		ConfigUtils.getConfig().setNbSplit(Integer.valueOf(nbSplit));
 		
 		String autoLoad = preferences.getString(ConfigUtils.AUTO_LOAD, "0");
@@ -131,10 +134,13 @@ public class Xk3y4AndroidActivity extends Activity {
 		int height = display.getHeight();
 		
 		int min = width;
+		int max = height;
 		if (width > height) {
 			min = height;
+			max = width;
 		}
 		ConfigUtils.getConfig().setScreenWidth(min);
+		ConfigUtils.getConfig().setScreenHeight(max);
 		
 		int newHeigth = (int) ((min/1.5) * 0.8);
 		ConfigUtils.getConfig().setCoverHeight(newHeigth);

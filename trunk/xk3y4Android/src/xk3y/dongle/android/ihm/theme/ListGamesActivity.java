@@ -7,6 +7,7 @@ import xk3y.dongle.android.R;
 import xk3y.dongle.android.dto.FullGameInfo;
 import xk3y.dongle.android.ihm.GameDetailsActivity;
 import xk3y.dongle.android.utils.ConfigUtils;
+import xk3y.dongle.android.utils.PaginateButton;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -15,10 +16,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -31,6 +34,7 @@ public class ListGamesActivity extends ThemeActivity {
 
 	private ListView lvListe;
 	List<FullGameInfo> maBibliotheque = new ArrayList<FullGameInfo>();
+	private LinearLayout paginateLayout;
 	
     /** Called when the activity is first created. */
     @Override
@@ -43,7 +47,20 @@ public class ListGamesActivity extends ThemeActivity {
         
 
         lvListe = (ListView)findViewById(R.id.listviewperso);
+        LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
         
+        int nbPage = ConfigUtils.getConfig().getNbPages();
+		if (nbPage != 1) {
+			params = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, ConfigUtils.getConfig().getScreenHeight() - 150);
+			// Add button if pagination
+			paginateLayout = (LinearLayout)findViewById(R.id.paginate_layout_list);
+			
+			for (int i = 1; i <= nbPage; i++) {
+				paginateLayout.addView(new PaginateButton(this, String.valueOf(i)));
+			}
+		}
+		lvListe.setLayoutParams(params);
+		
         initData();
        
         ListGamesAdapter adapter = new ListGamesAdapter(this, maBibliotheque);
@@ -55,6 +72,8 @@ public class ListGamesActivity extends ThemeActivity {
         // Icon of the app
         setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.ic_launcher);
         
+		
+		
         lvListe.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
