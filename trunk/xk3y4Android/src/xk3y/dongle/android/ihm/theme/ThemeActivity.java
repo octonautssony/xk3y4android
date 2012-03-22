@@ -39,9 +39,11 @@ public class ThemeActivity extends Activity {
 
 		// S'il est égal à itemOptions
 		case R.id.itemOptions:
+			/*
 			Intent myIntent = new Intent(this, SettingsActivity.class);
 			this.startActivity(myIntent);
-
+			*/
+			Toast.makeText(this, "Options", Toast.LENGTH_SHORT).show();
 			return true;
 
 		// S'il est égal à itemQuitter

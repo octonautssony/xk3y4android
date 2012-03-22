@@ -38,6 +38,7 @@ public class FullGameInfo extends Iso implements Serializable {
 	    out.writeUTF(summary);
 	    out.writeUTF(gender);
 	 
+	    /*
 	    if (ConfigUtils.getConfig().loadBanner()) {
 		    String strBanner = " ";
 			try {
@@ -50,20 +51,21 @@ public class FullGameInfo extends Iso implements Serializable {
 			}
 		    out.writeUTF(strBanner);
 	    }
-	    
+	    */
 	    ByteArrayOutputStream stream = new ByteArrayOutputStream();
 	    originalCover.compress(Bitmap.CompressFormat.PNG, 100, stream);
 	    this.imageByteArray = stream.toByteArray();
 	 
 	    out.writeObject(this.imageByteArray);
 
-	    /*
-	    ByteArrayOutputStream bannerstream = new ByteArrayOutputStream();
-	    banner.compress(Bitmap.CompressFormat.PNG, 100, bannerstream);
-	    this.bannerByteArray = bannerstream.toByteArray();
-	 
-	    out.writeObject(this.bannerByteArray);
-*/
+	    if (ConfigUtils.getConfig().loadBanner()) {
+	    	ByteArrayOutputStream bannerstream = new ByteArrayOutputStream();
+		    banner.compress(Bitmap.CompressFormat.PNG, 100, bannerstream);
+		    this.bannerByteArray = bannerstream.toByteArray();
+		    out.writeObject(this.bannerByteArray);
+	    }
+	    
+
 	}
 	 
 	/** Included for serialization - read this object from the supplied input stream. */
@@ -74,6 +76,7 @@ public class FullGameInfo extends Iso implements Serializable {
         summary = in.readUTF();
         gender = in.readUTF();
 	 
+        /*
         if (ConfigUtils.getConfig().loadBanner()) {
 	        String strBanner = in.readUTF();
 			try {
@@ -83,17 +86,19 @@ public class FullGameInfo extends Iso implements Serializable {
 				e.printStackTrace();
 			}
         }
-        
+        */
 	    this.imageByteArray = (byte[]) in.readObject();
 	    originalCover = BitmapFactory.decodeByteArray(this.imageByteArray,
 	                                               0, this.imageByteArray.length);
 
         
-/*
-	    this.bannerByteArray = (byte[]) in.readObject();
-	    banner = BitmapFactory.decodeByteArray(this.bannerByteArray,
-	                                               0, this.bannerByteArray.length);
-	    */
+	    if (ConfigUtils.getConfig().loadBanner()) {
+	    	this.bannerByteArray = (byte[]) in.readObject();
+		    banner = BitmapFactory.decodeByteArray(this.bannerByteArray,
+		                                               0, this.bannerByteArray.length);
+        }
+	    
+	    
 	    try {
 			LoadingUtils.addCoverToGame(this, originalCover);
 		} catch (Exception e) {
