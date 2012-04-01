@@ -93,7 +93,7 @@ public class SettingsActivity extends Activity {
 	        spinnerSplit.setAdapter(adapterSplit);
 	        saveNbSplit = ConfigUtils.getConfig().getNbSplit();
 	        spinnerSplit.setSelection(saveNbSplit);
-	        spinnerSplit.setEnabled(false);
+	        //spinnerSplit.setEnabled(false);
 	        
     	} catch (Exception e) {
 			e.printStackTrace();

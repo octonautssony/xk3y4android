@@ -24,8 +24,8 @@ public class ImageUtils {
 	 */
 	public static Bitmap resizeCover(Bitmap cover) throws Exception {
 		Bitmap resizeCover = cover;
-		if (resizeCover == null) {
-			resizeCover = ConfigUtils.getConfig().getDefaultCover();
+		if (cover == null) {
+			cover = ConfigUtils.getConfig().getDefaultCover();
 		}
 		try {
 			// Resize the image
@@ -75,6 +75,9 @@ public class ImageUtils {
 	 */
 	public static Bitmap resizeCoverForList(Bitmap cover) throws Exception {
 		Bitmap resizeCover = cover;
+		if (cover == null) {
+			cover = ConfigUtils.getConfig().getDefaultCover();
+		}
 		try {
 			// Resize the image
 			int height = (int) (ConfigUtils.getConfig().getCoverHeight() * 0.4);
@@ -99,6 +102,9 @@ public class ImageUtils {
 	 */
 	public static Bitmap resizeBanner(Bitmap cover) throws Exception {
 		Bitmap resizeCover = cover;
+		if (cover == null) {
+			cover = ConfigUtils.getConfig().getDefaultBanner();
+		}
 		try {
 			if (resizeCover != null) {
 				// Resize the image

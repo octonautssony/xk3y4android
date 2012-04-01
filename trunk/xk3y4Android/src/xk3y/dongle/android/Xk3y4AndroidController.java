@@ -147,43 +147,44 @@ public class Xk3y4AndroidController implements OnClickListener {
 				debugMsg += "\nConvert XML to Object OK";
 			}	
 			
-			List<Iso> listIsos = ConfigUtils.getConfig().getXkey().getListeGames();
-			if (listIsos == null || (listIsos != null && listIsos.isEmpty())) {
-				debugMsg += "\nNo Game detected";
-				SHOW_ERROR = true;
-				error_to_display = R.string.no_games;
-			} else {
-
-				// Load game info
-				List<FullGameInfo> listGames = new ArrayList<FullGameInfo>();
-				int cptLoad = 0;
-				Collections.sort(listIsos, Iso.TitleComparator);
-				for (Iso game : listIsos){
-					cptLoad++;
-					currentGameNameToDebug = game.getTitle();
-					progressLoadingMessage = defaultLoadingMessage
-							+ "\nLoading game "+ cptLoad + "/" + listIsos.size()
-							+ "\n"+ game.getTitle();
-					sendMessage(UPDATE_PROGRESS);
-					listGames.add(LoadingUtils.loadGameInfo(game));
-
-				}
-
-				 ConfigUtils.getConfig().setListeGames(listGames);
-				 
-				// Open list games window
-				currentGameNameToDebug = "All Games load...";
-				debugMsg += "\nLaunch CoverFlow...";
-				
-				Intent myIntent = null;
-				if (ConfigUtils.getConfig().addCoverTitle()) {
-					myIntent = new Intent(view, CoverFlowGamesActivity.class);
+			if (!SHOW_ERROR) {
+				List<Iso> listIsos = ConfigUtils.getConfig().getXkey().getListeGames();
+				if (listIsos == null || (listIsos != null && listIsos.isEmpty())) {
+					debugMsg += "\nNo Game detected";
+					SHOW_ERROR = true;
+					error_to_display = R.string.no_games;
 				} else {
-					myIntent = new Intent(view, ListGamesActivity.class);
+	
+					// Load game info
+					List<FullGameInfo> listGames = new ArrayList<FullGameInfo>();
+					int cptLoad = 0;
+					Collections.sort(listIsos, Iso.TitleComparator);
+					for (Iso game : listIsos){
+						cptLoad++;
+						currentGameNameToDebug = game.getTitle();
+						progressLoadingMessage = defaultLoadingMessage
+								+ "\nLoading game "+ cptLoad + "/" + listIsos.size()
+								+ "\n"+ game.getTitle();
+						sendMessage(UPDATE_PROGRESS);
+						listGames.add(LoadingUtils.loadGameInfo(game));
+	
+					}
+	
+					 ConfigUtils.getConfig().setListeGames(listGames);
+					 
+					// Open list games window
+					currentGameNameToDebug = "All Games load...";
+					debugMsg += "\nLaunch CoverFlow...";
+					
+					Intent myIntent = null;
+					if (ConfigUtils.getConfig().addCoverTitle()) {
+						myIntent = new Intent(view, CoverFlowGamesActivity.class);
+					} else {
+						myIntent = new Intent(view, ListGamesActivity.class);
+					}
+					view.startActivity(myIntent);
 				}
-				view.startActivity(myIntent);
 			}
-			
 			
 			
 		} catch (OutOfMemoryError E) {
