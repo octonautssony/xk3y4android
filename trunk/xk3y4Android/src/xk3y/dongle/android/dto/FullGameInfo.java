@@ -35,8 +35,16 @@ public class FullGameInfo extends Iso implements Serializable {
 	private void writeObject(ObjectOutputStream out) throws IOException{
 	    out.writeUTF(getTitle());
 	    out.writeUTF(getId());
-	    out.writeUTF(summary);
-	    out.writeUTF(gender);
+	    if (summary == null) {
+	    	out.writeUTF(" ");
+	    } else {
+	    	out.writeUTF(summary);
+	    }
+	    if (gender == null) {
+	    	out.writeUTF(" ");
+	    } else {
+	    	out.writeUTF(gender);
+	    }
 	 
 	    /*
 	    if (ConfigUtils.getConfig().loadBanner()) {

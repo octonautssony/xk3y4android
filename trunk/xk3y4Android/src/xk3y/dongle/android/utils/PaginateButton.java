@@ -24,13 +24,16 @@ public class PaginateButton extends Button implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		int nbGamesToLoad = ConfigUtils.getConfig().getNbGamesToLoad();
 		int numPage = Integer.valueOf(this.getText().toString());
-		int start = (numPage - 1) * nbGamesToLoad;
-		int end = numPage * nbGamesToLoad;
+		ConfigUtils.getConfig().setCurrentPage(numPage);
+		/*
+		int start = ConfigUtils.getConfig().getFirstGameToLoad();
+		int end = ConfigUtils.getConfig().getLastGameToLoad();
 		
 		String loadingGame = "Loading game " + start + " to " + end;
 		Toast.makeText(v.getContext(), loadingGame, Toast.LENGTH_SHORT).show();
+		*/
+		ConfigUtils.getConfig().getCurrentActivity().initActivity();
 	}
 
 }

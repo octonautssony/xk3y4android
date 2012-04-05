@@ -55,11 +55,14 @@ public class CoverFlowGamesActivity extends ThemeActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		requestWindowFeature(Window.FEATURE_LEFT_ICON);
+		ConfigUtils.getConfig().setCurrentActivity(this);
+	}
+
+	@Override
+	public void initTheme() {
 
 		listGames = ConfigUtils.getConfig().getListeGames();
-		
 		
 		//CoverFlow coverFlow;
 		coverFlow = new CoverFlow(this);
@@ -71,7 +74,7 @@ public class CoverFlowGamesActivity extends ThemeActivity {
 		coverFlow.setAlwaysDrawnWithCacheEnabled(true);
 
 		coverFlow.setSpacing(0);
-		coverFlow.setSelection(4, true);
+		coverFlow.setSelection(0, true);
 		coverFlow.setAnimationDuration(1000);
 		coverFlow.setOnItemClickListener(new OnItemClickListener() {
 
@@ -119,7 +122,7 @@ public class CoverFlowGamesActivity extends ThemeActivity {
         setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.ic_launcher);
 
 	}
-
+	
 	
 	public class ImageAdapter extends BaseAdapter {
 		int mGalleryItemBackground;
@@ -170,4 +173,5 @@ public class CoverFlowGamesActivity extends ThemeActivity {
 		}
 
 	}
+
 }

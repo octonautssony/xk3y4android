@@ -40,9 +40,13 @@ public class ListGamesActivity extends ThemeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
         requestWindowFeature(Window.FEATURE_LEFT_ICON);
-        
+        ConfigUtils.getConfig().setCurrentActivity(this);
+    }
+
+
+	@Override
+	public void initTheme() {
         setContentView(R.layout.list_games);
         
 
@@ -88,8 +92,8 @@ public class ListGamesActivity extends ThemeActivity {
 				ListGamesActivity.this.startActivity(myIntent);
 			}
 		});
-    }
-
+	}
+	
 	private void initData() {
 		maBibliotheque.clear();
 		maBibliotheque = ConfigUtils.getConfig().getListeGames();
@@ -188,5 +192,6 @@ public class ListGamesActivity extends ThemeActivity {
 		}
 
 	}
+
 
 }

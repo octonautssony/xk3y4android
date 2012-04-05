@@ -337,6 +337,7 @@ public class LoadingUtils {
 		try {
 			removeDataDir(GAME_FOLDER_PATH);
 			removeDataDir(COVER_FOLDER_PATH);
+			System.gc();
 		} catch (Exception e) {
 			throw e;
 		}

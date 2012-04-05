@@ -100,7 +100,7 @@ public class Xk3y4AndroidController implements OnClickListener {
 				public void run() {
 					sendMessage(UPDATE_STARTED);
 					listGames();
-					sendMessage(UPDATE_FINISHED);
+					
 				}
 
 			}).start();
@@ -116,6 +116,7 @@ public class Xk3y4AndroidController implements OnClickListener {
 	 */
 	private void listGames() {
 		try {
+			SHOW_ERROR = false;
 			debugMsg = "List Games...";
 			
 			urlToListGames = "http://" + ConfigUtils.getConfig().getIpAdress()
@@ -154,26 +155,33 @@ public class Xk3y4AndroidController implements OnClickListener {
 					SHOW_ERROR = true;
 					error_to_display = R.string.no_games;
 				} else {
-	
+					Collections.sort(listIsos, Iso.TitleComparator);
+					ConfigUtils.getConfig().setListeAllGames(listIsos);
+					ConfigUtils.getConfig().setCurrentPage(1);
+					
+					/*
 					// Load game info
 					List<FullGameInfo> listGames = new ArrayList<FullGameInfo>();
-					int cptLoad = 0;
-					Collections.sort(listIsos, Iso.TitleComparator);
-					for (Iso game : listIsos){
+					int cptLoad = ConfigUtils.getConfig().getFirstGameToLoad();
+					int cptEnd = ConfigUtils.getConfig().getLastGameToLoad() + 1;
+					for (Iso game : ConfigUtils.getConfig().getListeIsoToLoad()){
 						cptLoad++;
 						currentGameNameToDebug = game.getTitle();
 						progressLoadingMessage = defaultLoadingMessage
-								+ "\nLoading game "+ cptLoad + "/" + listIsos.size()
+								+ "\nLoading game "+ cptLoad + "/" + cptEnd
 								+ "\n"+ game.getTitle();
 						sendMessage(UPDATE_PROGRESS);
 						listGames.add(LoadingUtils.loadGameInfo(game));
 	
 					}
 	
-					 ConfigUtils.getConfig().setListeGames(listGames);
-					 
-					// Open list games window
+					ConfigUtils.getConfig().setListeGames(listGames);
 					currentGameNameToDebug = "All Games load...";
+					 */
+					
+					sendMessage(UPDATE_FINISHED);
+					
+					// Open list games window
 					debugMsg += "\nLaunch CoverFlow...";
 					
 					Intent myIntent = null;
@@ -192,7 +200,7 @@ public class Xk3y4AndroidController implements OnClickListener {
 			SHOW_ERROR = true;
 			error_to_display = R.string.out_of_memory_error;
 		} catch (Exception e) {
-			ErrorReporter.getInstance().putCustomData("\n\nLOADIG_GAME", "\n" + currentGameNameToDebug);
+			
 			ErrorReporter.getInstance().putCustomData("\n\nDEBUG_MESSAGE", "\n" + debugMsg);
 			ErrorReporter.getInstance().handleException(e);
 

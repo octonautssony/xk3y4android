@@ -1,10 +1,13 @@
 package xk3y.dongle.android.utils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import xk3y.dongle.android.dto.FullGameInfo;
+import xk3y.dongle.android.dto.Iso;
 import xk3y.dongle.android.dto.Xkey;
+import xk3y.dongle.android.ihm.theme.ThemeActivity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
@@ -34,7 +37,7 @@ public final class ConfigUtils implements Serializable {
     public static final int THEME_BANNER_LIST = 2;
     public static final int THEME_COVER_LIST = 3;
     
-    public static final int NB_GAME_INCREMENT = 5;
+    public static final int NB_GAME_INCREMENT = 3;
     
 	/** The Xkey IP adress */
 	private String ipAdress;
@@ -46,8 +49,12 @@ public final class ConfigUtils implements Serializable {
 	SharedPreferences preferences;
 	/** The xkey object with list games and infos */
 	private Xkey xkey;
-	/** The list of games In all partitions*/
+	/** The list of games to display*/
 	private List<FullGameInfo> listeGames;
+	/** The list of games In all partitions allready sort */
+	private List<Iso> listeAllGames;
+	/** The list of games to display */
+	private List<Iso> listeIsoToLoad;
 	/** The game selected by the user */
 	private FullGameInfo selectedGame;
 	/** The screen with */
@@ -68,8 +75,12 @@ public final class ConfigUtils implements Serializable {
 	private int theme;
 	/** The selected nb split by page */
 	private int nbSplit;
+	/** Index of the current page */
+	private int currentPage = 1;
 	/** Games auto loading */
 	private boolean autoLoad = false;
+	/** The current theme activity */
+	private ThemeActivity currentActivity;
 	
 	private static ConfigUtils instance;
 
@@ -223,6 +234,30 @@ public final class ConfigUtils implements Serializable {
 	public void setScreenHeight(int screenHeight) {
 		this.screenHeight = screenHeight;
 	}
+	
+	public List<Iso> getListeAllGames() {
+		return listeAllGames;
+	}
+
+	public void setListeAllGames(List<Iso> listeAllGames) {
+		this.listeAllGames = listeAllGames;
+	}
+
+	public List<Iso> getListeIsoToLoad() {
+		return listeIsoToLoad;
+	}
+
+	public void setListeIsoToLoad(List<Iso> listeIsoToLoad) {
+		this.listeIsoToLoad = listeIsoToLoad;
+	}
+	
+	public ThemeActivity getCurrentActivity() {
+		return currentActivity;
+	}
+
+	public void setCurrentActivity(ThemeActivity currentActivity) {
+		this.currentActivity = currentActivity;
+	}
 
 	/** Switch theme, load the banner */
 	public boolean loadBanner() {
@@ -247,12 +282,7 @@ public final class ConfigUtils implements Serializable {
 	 * @return the number of pages to display
 	 */
 	public int getNbPages() {
-		int nbGameToLoad = getNbGamesToLoad();
-		int nbPage = 1;
-		if (nbSplit != 0) {
-			nbPage = (ConfigUtils.getConfig().getListeGames().size() / nbGameToLoad) + 1;
-		}
-		return nbPage;
+		return nbSplit + 1;
 	}
 	
 	
@@ -261,8 +291,58 @@ public final class ConfigUtils implements Serializable {
 	 * @return the number of games to load
 	 */
 	public int getNbGamesToLoad() {
-		return nbSplit * NB_GAME_INCREMENT;
+		int nbGames = getListeAllGames().size();
+		if (getNbPages() > 1) {
+			nbGames = (getListeAllGames().size() / getNbPages()) + 1;
+		}
+		return nbGames;
 	}
+	
+	/**
+	 * Index of the first game to load
+	 * @param numPage number of the page to load
+	 * @return Index of the first game to load
+	 */
+	public int getFirstGameToLoad() {
+		return (getCurrentPage() - 1) * getNbGamesToLoad();
+	}
+	
+	/**
+	 * Index of the last game to load
+	 * @param numPage number of the page to load
+	 * @return Index of the last game to load
+	 */
+	public int getLastGameToLoad() {
+		int end = getCurrentPage() *  getNbGamesToLoad();
+		if (end >= getListeAllGames().size()) {
+			end = getListeAllGames().size();
+		}
+		return end - 1;
+	}
+
+	/**
+	 * Index if the current page
+	 * @return
+	 */
+	public int getCurrentPage() {
+		return currentPage;
+	}
+
+	/**
+	 * Set the index of the current page
+	 * <br />Load liste of game associate of this page
+	 * @param currentPage
+	 */
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+		listeIsoToLoad = new ArrayList<Iso>();
+		int start = getFirstGameToLoad();
+		int end = getLastGameToLoad();
+		for (int i = start; i <= end; i++) {
+			listeIsoToLoad.add(listeAllGames.get(i));
+		}
+	}
+
 	
 	
 	/*
