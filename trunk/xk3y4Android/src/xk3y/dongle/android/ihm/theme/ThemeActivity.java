@@ -8,16 +8,15 @@ import org.acra.ErrorReporter;
 import xk3y.dongle.android.R;
 import xk3y.dongle.android.dto.FullGameInfo;
 import xk3y.dongle.android.dto.Iso;
-import xk3y.dongle.android.ihm.SettingsActivity;
 import xk3y.dongle.android.utils.ConfigUtils;
 import xk3y.dongle.android.utils.DialogBoxUtils;
 import xk3y.dongle.android.utils.LoadingUtils;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -170,4 +169,25 @@ public abstract class ThemeActivity extends Activity {
 	}
 	
 	public abstract void initTheme();
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// Clear bitmap when press back button
+	    if (keyCode == KeyEvent.KEYCODE_BACK) {
+			Toast.makeText(ThemeActivity.this, R.string.improve_memory, Toast.LENGTH_SHORT).show();
+			
+			for (FullGameInfo game : ConfigUtils.getConfig().getListeGames()) {
+				/*
+				LoadingUtils.clearBitmap(game.getBanner());
+				LoadingUtils.clearBitmap(game.getCover());
+				LoadingUtils.clearBitmap(game.getOriginalCover());
+				*/
+				game.setBanner(null);
+				game.setCover(null);
+				game.setOriginalCover(null);
+			}
+			System.gc();
+	    }
+	    return super.onKeyDown(keyCode, event);
+	}
 }

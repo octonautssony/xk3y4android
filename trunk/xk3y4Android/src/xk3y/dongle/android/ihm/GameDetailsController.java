@@ -72,6 +72,7 @@ public class GameDetailsController implements OnClickListener {
 	 */
 	public void onClick(View v) {
 		if(v == view.getBtLaunchGame()) {
+			ConfigUtils.getConfig().vivrate();
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
@@ -83,8 +84,10 @@ public class GameDetailsController implements OnClickListener {
 			}).start();
 			
 		} else if (v == view.getBtBack()) {
+			ConfigUtils.getConfig().vivrate();
 			view.finish();
 		} else if (v == view.getTextSummary()) {
+			ConfigUtils.getConfig().vivrate();
 			showSummary();
 		}
 		

@@ -35,6 +35,8 @@
         <item>BannerList (light)</item>
         <item>CoverList (very light)</item>
     </string-array>
+    <string name="please_wait">Please wait...</string>
+    <string name="improve_memory">Improve memory, please wait</string>
     <string name="ckb_auto_start">Games auto loading when app start</string>
     <string name="out_of_memory_error">Sorry but your device not seem have enough memory to run this theme.\n\nYou can try to relaunch app to cache more data or try an another theme.\n\nIf the problem persist, you must split your list of games by pages or remove some games on your hdd to run this app</string>
     <string name="split_by_page">How many pages</string>

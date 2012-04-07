@@ -23,7 +23,7 @@ public class SettingsActivity extends Activity {
 	private Spinner spinnerSplit;
 	//private CheckBox ckbLightTheme;
 	private CheckBox ckbClearCache;
-	private CheckBox ckbAutoLoad;
+	//private CheckBox ckbAutoLoad;
 	private EditText textIp;
 	private Button btSave;
 	private Button btBack;
@@ -72,8 +72,8 @@ public class SettingsActivity extends Activity {
 	    	//ckbLightTheme = (CheckBox)findViewById(R.id.ckb_light_theme);
 	    	//ckbLightTheme.setChecked(ConfigUtils.getConfig().isLightTheme());
 	    	
-	    	ckbAutoLoad = (CheckBox)findViewById(R.id.ckb_auto_start);
-	    	ckbAutoLoad.setChecked(ConfigUtils.getConfig().isAutoLoad());
+	    	//ckbAutoLoad = (CheckBox)findViewById(R.id.ckb_auto_start);
+	    	//ckbAutoLoad.setChecked(ConfigUtils.getConfig().isAutoLoad());
 	    	
 	    	ckbClearCache = (CheckBox)findViewById(R.id.ckb_clear_cache);
 	    	ckbClearCache.setChecked(false);
@@ -139,9 +139,10 @@ public class SettingsActivity extends Activity {
 		return spinnerTheme;
 	}
 
+	/*
 	public CheckBox getCkbAutoLoad() {
 		return ckbAutoLoad;
-	}
+	}*/
 
 	public int getSaveTheme() {
 		return saveTheme;

@@ -1,12 +1,12 @@
 package xk3y.dongle.android.utils;
 
 import xk3y.dongle.android.R;
+import xk3y.dongle.android.dto.FullGameInfo;
 import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 public class PaginateButton extends Button implements OnClickListener {
 
@@ -24,6 +24,19 @@ public class PaginateButton extends Button implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
+		ConfigUtils.getConfig().vivrate();
+		for (FullGameInfo game : ConfigUtils.getConfig().getListeGames()) {
+			/*
+			LoadingUtils.clearBitmap(game.getBanner());
+			LoadingUtils.clearBitmap(game.getCover());
+			LoadingUtils.clearBitmap(game.getOriginalCover());
+			*/
+			game.setBanner(null);
+			game.setCover(null);
+			game.setOriginalCover(null);
+		}
+		System.gc();
+		
 		int numPage = Integer.valueOf(this.getText().toString());
 		ConfigUtils.getConfig().setCurrentPage(numPage);
 		/*

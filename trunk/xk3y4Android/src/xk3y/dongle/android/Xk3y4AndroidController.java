@@ -95,6 +95,7 @@ public class Xk3y4AndroidController implements OnClickListener {
 		SHOW_ERROR = false;
 		SHOW_DEBUG_MSG = false;
 		if(v == view.getBtListGames()) {
+			ConfigUtils.getConfig().vivrate();
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
@@ -106,6 +107,7 @@ public class Xk3y4AndroidController implements OnClickListener {
 			}).start();
 			
 		} else if (v == view.getBtSettings()) {
+			ConfigUtils.getConfig().vivrate();
 			settings();
 		}
 	}

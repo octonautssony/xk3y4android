@@ -11,6 +11,7 @@ import xk3y.dongle.android.ihm.theme.ThemeActivity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
+import android.os.Vibrator;
 
 
 
@@ -81,6 +82,8 @@ public final class ConfigUtils implements Serializable {
 	private boolean autoLoad = false;
 	/** The current theme activity */
 	private ThemeActivity currentActivity;
+	/** The vibrator when click a button */
+	Vibrator vibrator;
 	
 	private static ConfigUtils instance;
 
@@ -259,6 +262,23 @@ public final class ConfigUtils implements Serializable {
 		this.currentActivity = currentActivity;
 	}
 
+	public Vibrator getVibrator() {
+		return vibrator;
+	}
+
+	public void setVibrator(Vibrator vibrator) {
+		this.vibrator = vibrator;
+	}
+
+	/**
+	 * Vibrate the device
+	 */
+	public void vivrate() {
+		if (vibrator != null) {
+			vibrator.vibrate(30);
+		}
+	}
+	
 	/** Switch theme, load the banner */
 	public boolean loadBanner() {
 		boolean res = false;

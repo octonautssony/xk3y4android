@@ -337,7 +337,14 @@ public class LoadingUtils {
 		try {
 			removeDataDir(GAME_FOLDER_PATH);
 			removeDataDir(COVER_FOLDER_PATH);
-			System.gc();
+			if (ConfigUtils.getConfig().getListeGames() != null) {
+				for (FullGameInfo game : ConfigUtils.getConfig().getListeGames()) {
+					LoadingUtils.clearBitmap(game.getBanner());
+					LoadingUtils.clearBitmap(game.getCover());
+					LoadingUtils.clearBitmap(game.getOriginalCover());
+				}
+			}
+	    	System.gc();
 		} catch (Exception e) {
 			throw e;
 		}
@@ -366,9 +373,9 @@ public class LoadingUtils {
 	
 	// Clear bitmap
 	public static void clearBitmap(Bitmap bm) {
-		bm.recycle();
-		System.gc();
-
+		if (bm != null) {
+			bm.recycle();
+		}
 	}
 	
 	

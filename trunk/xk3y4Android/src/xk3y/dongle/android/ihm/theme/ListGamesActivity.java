@@ -11,6 +11,7 @@ import xk3y.dongle.android.utils.PaginateButton;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -60,7 +62,11 @@ public class ListGamesActivity extends ThemeActivity {
 			paginateLayout = (LinearLayout)findViewById(R.id.paginate_layout_list);
 			
 			for (int i = 1; i <= nbPage; i++) {
-				paginateLayout.addView(new PaginateButton(this, String.valueOf(i)));
+				Button btn = new PaginateButton(this, String.valueOf(i));
+				if (i == ConfigUtils.getConfig().getCurrentPage()) {
+					btn.setEnabled(false);
+				}
+				paginateLayout.addView(btn);
 			}
 		}
 		lvListe.setLayoutParams(params);
@@ -71,7 +77,7 @@ public class ListGamesActivity extends ThemeActivity {
         
         lvListe.setAdapter(adapter);
         
-        adapter.notifyDataSetChanged();
+        //adapter.notifyDataSetChanged();
         
         // Icon of the app
         setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.ic_launcher);
@@ -83,6 +89,8 @@ public class ListGamesActivity extends ThemeActivity {
 			@Override
 			public void onItemClick(AdapterView arg0, View v, int position,
 					long rowID) {
+				
+				ConfigUtils.getConfig().vivrate();
 				
 				FullGameInfo FullGameInfo = ConfigUtils.getConfig().getListeGames().get(position);
 				ConfigUtils.getConfig().setSelectedGame(FullGameInfo);
@@ -111,11 +119,17 @@ public class ListGamesActivity extends ThemeActivity {
 		
 		@Override
 		public int getCount() {
+			if (biblio == null) {
+				ListGamesActivity.this.finish();
+			}
 			return biblio.size();
 		}
 
 		@Override
 		public Object getItem(int position) {
+			if (biblio == null) {
+				ListGamesActivity.this.finish();
+			}
 			return biblio.get(position);
 		}
 
@@ -131,6 +145,9 @@ public class ListGamesActivity extends ThemeActivity {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
+			if (biblio == null) {
+				ListGamesActivity.this.finish();
+			}
 			
 			if (!ConfigUtils.getConfig().loadBanner()) {
 				convertView = getViewWithCover(position, convertView, parent);
@@ -157,6 +174,10 @@ public class ListGamesActivity extends ThemeActivity {
 			
 			//holder.tvTitre.setText(biblio.get(position).getTitre());
 			try {
+				Bitmap img = biblio.get(position).getBanner();
+				if (img.isRecycled()) {
+					img = ConfigUtils.getConfig().getDefaultBanner();
+				}
 				holder.tvBanner.setImageBitmap(biblio.get(position).getBanner());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

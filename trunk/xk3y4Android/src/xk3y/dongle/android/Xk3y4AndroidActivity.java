@@ -5,9 +5,11 @@ import java.io.File;
 import xk3y.dongle.android.utils.ConfigUtils;
 import xk3y.dongle.android.utils.LoadingUtils;
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.view.Display;
 import android.view.Window;
@@ -59,6 +61,9 @@ public class Xk3y4AndroidActivity extends Activity {
 		if (ConfigUtils.getConfig().isAutoLoad()) {
 			controller.onClick(btListGames);
 		}
+		
+		Vibrator vibe = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE) ;
+		ConfigUtils.getConfig().setVibrator(vibe);
     }
     
 	/**

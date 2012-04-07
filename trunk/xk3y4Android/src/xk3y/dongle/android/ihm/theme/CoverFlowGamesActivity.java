@@ -43,6 +43,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -82,6 +83,7 @@ public class CoverFlowGamesActivity extends ThemeActivity {
 			public void onItemClick(AdapterView arg0, View v, int position,
 					long rowID) {
 				
+				ConfigUtils.getConfig().vivrate();
 				FullGameInfo FullGameInfo = ConfigUtils.getConfig().getListeGames().get(position);
 				ConfigUtils.getConfig().setSelectedGame(FullGameInfo);
 				
@@ -112,7 +114,11 @@ public class CoverFlowGamesActivity extends ThemeActivity {
 			// Add button if pagination
 			paginateLayout = (LinearLayout)findViewById(R.id.paginate_layout);
 			for (int i = 1; i <= nbPage; i++) {
-				paginateLayout.addView(new PaginateButton(this, String.valueOf(i)));
+				Button btn = new PaginateButton(this, String.valueOf(i));
+				if (i == ConfigUtils.getConfig().getCurrentPage()) {
+					btn.setEnabled(false);
+				}
+				paginateLayout.addView(btn);
 			}
 		} else {
 			addContentView(coverFlow, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
@@ -133,6 +139,9 @@ public class CoverFlowGamesActivity extends ThemeActivity {
 		}
 
 		public int getCount() {
+			if (listGames == null) {
+				CoverFlowGamesActivity.this.finish();
+			}
 			return listGames.size();
 		}
 
@@ -145,6 +154,9 @@ public class CoverFlowGamesActivity extends ThemeActivity {
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
+			if (listGames == null) {
+				CoverFlowGamesActivity.this.finish();
+			}
 			final FullGameInfo FullGameInfo = listGames.get(position);
 			// Use this code if you want to load from resources
 			ImageView i = new ImageView(mContext);
