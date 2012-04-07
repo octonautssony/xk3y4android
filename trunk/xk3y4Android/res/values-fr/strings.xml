@@ -27,5 +27,25 @@
     <string name="time_played">Total temps</string>
     <string name="favorites">Favoris</string>
     <string name="xk3y_info">Xk3y Info</string>
-    <string name="out_of_memory_error">Désolé mais votre appareil ne semble pas disposer de suffisament de mémoire pour faire fonctionner ce thème.\n\nVous pouvez essayer de relancer l\'application pour mettre en cache plus de données ou essayer un autre thème.\n\nSi le problème persiste, supprimer quelques jeux de votre disque dur.</string>
+    <string name="out_of_memory_error">Désolé mais votre appareil ne semble pas disposer de suffisament de mémoire pour faire fonctionner ce thème.\n\nVous pouvez essayer de relancer l\'application pour mettre en cache plus de données ou essayer un autre thème.\n\nSi le problème persiste, vous pouvez découper votre liste de jeux par page depuis le menu option, ou aussi, supprimer quelques jeux de votre disque dur.</string>
+	<string name="theme">Thème</string>
+    <string name="choose_theme">Choisir un thème</string>
+    <string-array name="theme_array">
+        <item>CoverFlow (default)</item>
+        <item>CoverFlow (light)</item>
+        <item>BannerList (light)</item>
+        <item>CoverList (very light)</item>
+    </string-array>
+    <string name="please_wait">Veuillez patienter...</string>
+    <string name="improve_memory">Optimisation de la mémoire, Veuillez patienter...</string>
+    <string name="ckb_auto_start">Charger les jeux automatiquent au démarrage</string>
+	<string name="split_by_page">Combien de pages</string>
+    <string name="choose_split">Choisir le nombre de page \n(Découper votre liste de jeux)</string>
+    <string-array name="split_array">
+        <item>1 (default)</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
 </resources>
